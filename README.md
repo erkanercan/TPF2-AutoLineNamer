@@ -1,0 +1,46 @@
+[h1]Automatic Line Naming (ALN) for Transport Fever 2[/h1]
+
+[b]Description:[/b]
+The Automatic Line Naming (ALN) mod for Transport Fever 2 dynamically generates names for player-created lines based on route details, transport type, and whether they carry cargo or passengers. This mod simplifies gameplay by automatically creating unique, informative names for each line, helping you keep track of your network effortlessly. Featuring configurable settings, renaming options, and detailed logging, ALN lets you focus on managing your network without the hassle of manual naming.
+
+[h1]Current Features[/h1]
+
+[b]Automated Naming Convention[/b]:
+Each line name follows this structure:
+[code] [Transport Type] - [(Cargo Types)]: [First Town Initials] - [Last Town Initials] [Line Type] #[Count] [/code]
+
+[i]Components of the Naming Convention:[/i] [list] [\*][b]Transport Type[/b]: Abbreviation based on transport mode (e.g., RC for Road Cargo, TP for Train Passenger). [\*][b]Cargo Types[/b]: If applicable, displays the types of cargo in parentheses (e.g., (Grain)), or is left blank for passenger-only lines. [\*][b]Town Initials[/b]: Up to three-letter initials of the starting and ending towns (e.g., Spr for Springfield). [\*][b]Line Type[/b]: [list] [\*][b]LO (Local)[/b]: A line that operates within a single town, typically shorter routes such as urban buses or short-distance trams. [\*][b]IC (Intercity)[/b]: A line that connects two distinct towns, often medium-range routes like regional trains, intercity buses, or cargo trucks between two locations. [\*][b]RE (Regional)[/b]: A line that passes through three or more towns, typically longer routes covering multiple cities or regions, like express trains or multi-stop cargo routes. [/list] [\*][b]Count[/b]: If multiple lines share the same name, a unique count (e.g., #1, #2) is added to avoid duplicates. [/list]
+
+[i]Examples[/i]:
+[list] [*]Road Cargo Line: [i]RC - (Grain): Spr - Cap IC #1[/i] [*]Passenger Train Line: [i]TP - Spr - She IC[/i] [*]Air Passenger Line: [i]AP - Cap - Ogd LO[/i] [/list]
+
+[b]Transport Type Detection[/b]: Differentiates between passenger and cargo lines across all transport types, with shorthand for each mode.
+
+[b]Renaming Options[/b]:
+[list] [\*][b]Manual Refresh[/b]: Set a line’s name to [i]"reload"[/i] or [i]"r"[/i] to trigger an automatic renaming based on the current route and transport type. [\*][b]Default Naming[/b]: Lines with default values (e.g., [i]"Line 1"[/i], [i]"Line 2"[/i]) or prefixed with [i]"UNK"[/i] are automatically renamed. [\*][b]Tag Exclusion[/b]: Use the [i][NoAuto][/i] tag to exclude lines from auto-renaming. [/list]
+
+[h1]Upcoming Features[/h1]
+
+[list] [\*][b]In-Game Customization GUI[/b]: Directly adjust naming conventions, logging levels, and tag exclusions in-game. [\*][b]Additional Naming Patterns[/b]: More flexible patterns, including customizable prefixes and suffixes. [\*][b]Support for Custom Cargo Types[/b]: Enhanced detection for modded or custom cargo types to improve naming accuracy. [/list]
+
+[h1]How to Use[/h1]
+
+Install the Mod:
+Subscribe on the Steam Workshop and enable it in Transport Fever 2’s mod settings.
+
+Create a New Line:
+Set up a line as usual. ALN will automatically generate a name based on its details.
+
+Rename Existing Lines:
+ALN renames existing lines with default or placeholder names. You can also rename a line by setting its name to [i]"reload"[/i] or [i]"r"[/i].
+
+[h1]Troubleshooting and Tips[/h1]
+
+[b]Why is my line not renamed?[/b]
+The line may already have a custom name or might not meet renaming conditions (e.g., no assigned stops). Set the line name to [i]"reload"[/i] or [i]"r"[/i] to force a renaming.
+
+[b]How do I exclude a line from renaming?[/b]
+Use the [i][NoAuto][/i] tag in the line name to prevent auto-renaming.
+
+[h1]Notes[/h1]
+This mod automatically names new and default-named lines, making it ideal for quickly expanding your network. For feedback or bug reports, please leave a comment on the mod’s Steam Workshop page!
