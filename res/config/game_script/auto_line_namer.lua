@@ -149,8 +149,21 @@ end
 -- Retrieve town names by station group
 local function getTownIdByStationGroup(stationGroupId)
     local stationGroup = api_helper.getComponent(stationGroupId, api.type.ComponentType.STATION_GROUP)
-    return stationGroup and stationGroup.stations[1] and
-    api.engine.system.stationSystem.getTown(stationGroup.stations[1]) or nil
+    if stationGroup then
+        if stationGroup.stations and stationGroup.stations[1] then
+            local townId = api.engine.system.stationSystem.getTown(stationGroup.stations[1])
+            if townId then
+                return townId
+            else
+                log.warn("Town ID is nil for station group: " .. stationGroupId)
+            end
+        else
+            log.warn("No stations found in station group: " .. stationGroupId)
+        end
+    else
+        log.warn("No station group found for ID: " .. stationGroupId)
+    end
+    return nil
 end
 
 -- Get line data structure for generating the name
