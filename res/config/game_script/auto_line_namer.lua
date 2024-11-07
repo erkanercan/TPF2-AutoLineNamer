@@ -77,7 +77,11 @@ local function getTransportTypeAbbreviation(lineId)
     if transportModes[api.type.enum.TransportMode.TRUCK + 1] == 1 then
         return "RC"                             -- Road Cargo (Truck)
     elseif transportModes[api.type.enum.TransportMode.BUS + 1] == 1 then
-        return "RP"                             -- Road Passenger (Bus)
+        return "RP Bus"                         -- Road Passenger (Bus)
+    elseif transportModes[api.type.enum.TransportMode.TRAM + 1] == 1 then
+        return "RP Tram"                        -- Road Passenger (Tram)
+    elseif transportModes[api.type.enum.TransportMode.ELECTRIC_TRAM + 1] == 1 then
+        return "RP Tram"                        -- Road Passenger (Tram)
     elseif transportModes[api.type.enum.TransportMode.TRAIN + 1] == 1 then
         return isPassengerOnly and "TP" or "TC" -- Train Passenger or Train Cargo
     elseif transportModes[api.type.enum.TransportMode.ELECTRIC_TRAIN + 1] == 1 then
