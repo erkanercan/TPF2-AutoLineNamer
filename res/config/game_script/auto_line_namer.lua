@@ -6,6 +6,9 @@ local gui_settingsWindow = nil
 
 -- Rename lines based on generated name
 local function renameLines()
+    if not state.linanamerSettings.enabled then
+        return
+    end
     local lineIds = api.engine.system.lineSystem.getLinesForPlayer(api.engine.util.getPlayer())
 
     for _, lineId in ipairs(lineIds) do
