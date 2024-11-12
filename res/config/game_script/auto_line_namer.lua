@@ -231,6 +231,7 @@ local function renameLines()
     end
 end
 
+---@diagnostic disable-next-line: lowercase-global
 function data()
     return {
         update = renameLines,

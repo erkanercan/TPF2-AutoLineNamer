@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line: lowercase-global
 function data()
     return {
         info = {
