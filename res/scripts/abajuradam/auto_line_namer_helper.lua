@@ -3,6 +3,11 @@ local state = require("abajuradam/state")
 --- Helper functions for the Auto Line Namer mod.
 local ALNHelper = {}
 
+---sends a script command for "linemanager.lua"
+function ALNHelper.sendScriptCommand(id, name, param)
+    api.cmd.sendCommand(api.cmd.make.sendScriptEvent("auto_line_namer.lua", id, name, param))
+end
+
 -- Check if a line name can be updated (default names are considered updatable)
 function ALNHelper.isUpdatableName(name)
     local lowerName = string.lower(name)
