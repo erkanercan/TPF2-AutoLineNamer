@@ -2,12 +2,7 @@ local log = require 'abajuradam/logging'
 local ALNHelper = require 'abajuradam/auto_line_namer_helper'
 local state = require 'abajuradam/state'
 
--- Check if a line name can be updated (default names are considered updatable)
-local function isUpdatableName(name)
-    local lowerName = string.lower(name)
-    return name == "" or name:match("^%s*$") or lowerName == "r" or lowerName == "reload" or name:match("^Line %d+$") or
-        lowerName:match("^unk")
-end
+
 
 -- Rename lines based on generated name
 local function renameLines()
@@ -17,7 +12,7 @@ local function renameLines()
         local lineName = ALNHelper.getLineName(lineId)
 
         -- Check if the line name is updatable or has the default prefix
-        if isUpdatableName(lineName) or lineName:sub(1, 1) == state.linanamerSettings.prefix then
+        if ALNHelper.isUpdatableName(lineName) or lineName:sub(1, 1) == state.linanamerSettings.prefix then
             local newName = ALNHelper.generateLineName(lineId)
             api.cmd.sendCommand(api.cmd.make.setName(lineId, newName))
             log.info("Renamed line " .. lineId .. " to: " .. newName)

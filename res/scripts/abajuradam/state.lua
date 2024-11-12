@@ -12,7 +12,10 @@
 --- {townNames} -> Town names of the line. It can be like: "Town1 - Town2" etc. User can also select how to show them in the convention.
 --- {lineNumber} -> Line number of the line. It is a number we use to identify the line when same line name is used in different lines.
 
-local state = {
+
+
+--- Default settings for the line naming.
+local initialState = {
     linanamerSettings = {
         activeConvention = "{transportType} - {townNames} - {lineType} - {lineNumber} - {cargoTypes}",
         tagPrefix = "[NoAuto]",
@@ -47,6 +50,8 @@ local state = {
         },
     },
 }
+
+local state = initialState
 
 --- Retrieves the current settings.
 --- @return table settings The current settings.

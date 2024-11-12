@@ -3,6 +3,13 @@ local state = require("abajuradam/state")
 --- Helper functions for the Auto Line Namer mod.
 local ALNHelper = {}
 
+-- Check if a line name can be updated (default names are considered updatable)
+function ALNHelper.isUpdatableName(name)
+    local lowerName = string.lower(name)
+    return name == "" or name:match("^%s*$") or lowerName == "r" or lowerName == "reload" or name:match("^Line %d+$") or
+        lowerName:match("^unk")
+end
+
 --- Retrieves all towns from a line.
 --- @param lineComp table The line component.
 --- @return table towns A table of town names.
