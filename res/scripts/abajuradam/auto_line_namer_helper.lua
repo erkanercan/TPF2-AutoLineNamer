@@ -3,6 +3,9 @@ local state = require("abajuradam/state")
 --- Helper functions for the Auto Line Namer mod.
 local ALNHelper = {}
 
+--- Retrieves all towns from a line.
+--- @param lineComp table The line component.
+--- @return table towns A table of town names.
 local function getAllTownInfosFromLine(lineComp)
     local towns = {}
     for _, stop in ipairs(lineComp.stops) do
@@ -51,6 +54,9 @@ local function getAllVehiclesInfosFromLine(lineId)
     return vehicles
 end
 
+--- Retrieves the initials of a town name.
+--- @param townName string The name of the town.
+--- @return string townInitials The initials of the town name.
 local function getTownNameInitials(townName)
     local townInitials = ""
     for word in townName:gmatch("%S+") do
@@ -59,6 +65,9 @@ local function getTownNameInitials(townName)
     return townInitials
 end
 
+--- Retrieves the data of a line.
+--- @param lineId number The ID of the line to retrieve data from.
+--- @return table lineData The data of the line.
 local function getLineData(lineId)
     local lineData = {
         id = lineId,
@@ -156,6 +165,9 @@ local function buildCargoTypeString(lineData)
     return cargoTypeString
 end
 
+--- Builds the transport type string from the line data.
+--- @param lineData table The table of line data.
+--- @return string transportTypeString The transport type string.
 local function buildTransportTypeString(lineData)
     local transportTypeString = ""
     if not lineData or not lineData.vehicleInfo then
@@ -207,6 +219,9 @@ local function buildTransportTypeString(lineData)
     return transportTypeString
 end
 
+--- Builds the line type string from the line data.
+--- @param lineData table The table of line data.
+--- @return string lineTypeString The line type string.
 local function buildLineTypeString(lineData)
     local lineTypeString = ""
     if not lineData or not lineData.towns then
@@ -225,6 +240,9 @@ local function buildLineTypeString(lineData)
     return lineTypeString
 end
 
+--- Generates the line name from the line ID.
+--- @param lineId number The ID of the line to generate the name from.
+--- @return string lineName The generated line name.
 function ALNHelper.generateLineName(lineId)
     local lineData = getLineData(lineId)
     if not lineData then
