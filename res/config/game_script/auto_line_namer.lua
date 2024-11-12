@@ -52,30 +52,71 @@ local function gui_initSettingsWindow()
         end
     end)
 
-    -- SETTINGS WINDOW
-    -- BoxLayout for the settings window
-    local settingsBox = api.gui.layout.BoxLayout.new("VERTICAL")
+    local tabWidget = api.gui.comp.TabWidget.new("NORTH")
 
-    -- AUTO LINE NAMER OPTIONS
-    local header_LineManagerOptions = api.gui.comp.TextView.new("Auto Line Namer Options")
-    settingsBox:addItem(header_LineManagerOptions)
+    -- GENERAL SETTINGS
+    local generalSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local generalSettingsWrapper = api.gui.comp.Component.new("generalSettingsWrapper")
+    generalSettingsWrapper:setLayout(generalSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("General"), generalSettingsWrapper)
 
     -- Toggle for enabling/disabling the Auto Line Namer
-    local checkBox_enableLineManager = api.gui.comp.CheckBox.new("Enable")
+    local header_EnableLineManager = api.gui.comp.TextView.new("Enabling:")
+    generalSettingsLayout:addItem(header_EnableLineManager)
+    local checkBox_enableLineManager = api.gui.comp.CheckBox.new("Enable auto line naming")
     checkBox_enableLineManager:setSelected(state.linanamerSettings.enabled, false)
     checkBox_enableLineManager:onToggle(function(selected)
         ALNHelper.sendScriptCommand("settings_gui", "linemanager_enabled", selected)
     end)
-    settingsBox:addItem(checkBox_enableLineManager)
+    generalSettingsLayout:addItem(checkBox_enableLineManager)
+
+    -- Prefix for lines that should not be renamed
+    local header_TagPrefix = api.gui.comp.TextView.new("Disable Prefix:")
+    generalSettingsLayout:addItem(header_TagPrefix)
+    local textInputField_tagPrefix = api.gui.comp.TextInputField.new("Disable Prefix")
+    textInputField_tagPrefix:setText(state.linanamerSettings.tagPrefix, false)
+    textInputField_tagPrefix:onChange(function(text)
+        ALNHelper.sendScriptCommand("settings_gui", "tagPrefix", text)
+    end)
+    generalSettingsLayout:addItem(textInputField_tagPrefix)
+
+    -- NAMING CONVENTION SETTINGS
+    local namingConventionLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local namingConventionWrapper = api.gui.comp.Component.new("namingConventionWrapper")
+    namingConventionWrapper:setLayout(namingConventionLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Naming"), namingConventionWrapper)
+
+    -- Active naming convention
+    local header_ActiveConvention = api.gui.comp.TextView.new("Active Convention:")
+    namingConventionLayout:addItem(header_ActiveConvention)
+    local textInputField_activeConvention = api.gui.comp.TextInputField.new("Active Convention")
+    textInputField_activeConvention:setText(state.linanamerSettings.activeConvention, false)
+    namingConventionLayout:addItem(textInputField_activeConvention)
+
+    local description_ActiveConvention = api.gui.comp.TextView.new("The active naming convention for the lines.")
+    namingConventionLayout:addItem(description_ActiveConvention)
+    local description_conventions = api.gui.comp.TextView.new("Available conventions:")
+    namingConventionLayout:addItem(description_conventions)
+    local description_conventionOptions_transportType = api.gui.comp.TextView.new(
+        "{transportType} -> RP, RC, TP, TC, WP, WC, AP, AC, UNK")
+    namingConventionLayout:addItem(description_conventionOptions_transportType)
+    local description_conventionOptions_lineType = api.gui.comp.TextView.new("{lineType} -> LO, IC, RE")
+    namingConventionLayout:addItem(description_conventionOptions_lineType)
+    local description_conventionOptions_cargoTypes = api.gui.comp.TextView.new("{cargoTypes} -> Logs, Passengers, etc.")
+    namingConventionLayout:addItem(description_conventionOptions_cargoTypes)
+    local description_conventionOptions_lineNumber = api.gui.comp.TextView.new("{lineNumber} -> 1, 2, 3, etc.")
+    namingConventionLayout:addItem(description_conventionOptions_lineNumber)
+    local description_conventionOptions_townNames = api.gui.comp.TextView.new("{townNames} -> Town1 - Town2")
+    namingConventionLayout:addItem(description_conventionOptions_townNames)
 
     -- WINDOW CREATION
-    gui_settingsWindow = api.gui.comp.Window.new("Auto Line Namer Settings", settingsBox)
+    gui_settingsWindow = api.gui.comp.Window.new("Auto Line Namer Settings", tabWidget)
     gui_settingsWindow:setTitle("Auto Line Namer Settings")
     gui_settingsWindow:addHideOnCloseHandler()
     gui_settingsWindow:setMovable(true)
     gui_settingsWindow:setPinButtonVisible(true)
     gui_settingsWindow:setResizable(false)
-    gui_settingsWindow:setSize(api.gui.util.Size.new(1000, 500))
+    gui_settingsWindow:setSize(api.gui.util.Size.new(750, 500))
     -- TODO: Setting the position here seems to cause the window to be invisible (or outside the screen, or something...)
     --gui_settingsWindow:setPosition(100, 100)
     gui_settingsWindow:setPinned(true)
@@ -91,6 +132,9 @@ function data()
                     if name == "linemanager_enabled" then
                         state.linanamerSettings.enabled = param
                         log.info("Auto Line Namer enabled: " .. tostring(param))
+                    elseif name == "tagPrefix" then
+                        state.linanamerSettings.tagPrefix = param
+                        log.info("Tag prefix set to: " .. param)
                     end
                 end
             end
