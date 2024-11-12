@@ -65,6 +65,10 @@ local function getTownNameInitials(townName)
     return townInitials
 end
 
+function ALNHelper.getLineName(lineId)
+    return api.engine.getComponent(lineId, api.type.ComponentType.NAME).name
+end
+
 --- Retrieves the data of a line.
 --- @param lineId number The ID of the line to retrieve data from.
 --- @return table lineData The data of the line.
@@ -84,7 +88,7 @@ local function getLineData(lineId)
     if not isLineExists then
         return nil
     end
-    lineData.name = api.engine.getComponent(lineId, api.type.ComponentType.NAME).name
+    lineData.name = ALNHelper.getLineName(lineId)
     lineData.towns = getAllTownInfosFromLine(lineComp)
     lineData.vehicles = getAllVehiclesInfosFromLine(lineId)
     lineData.vehicleInfo = lineComp.vehicleInfo
@@ -248,9 +252,12 @@ function ALNHelper.generateLineName(lineId)
     if not lineData then
         return ""
     end
+    -- If lineData.towns is empty, return empty string.
+    if #lineData.towns == 0 then
+        return ""
+    end
     local lineName = ""
-    local settings = state.getSettings()
-    local convention = settings.linanamerSettings.activeConvention
+    local convention = state.linanamerSettings.activeConvention
     -- Convention can include 5 different values: {transportType}, {townNames}, {lineType}, {cargoTypes}, {lineNumber}
     -- We need to replace these values with the actual values.
     -- First we need to get the transport type string.
