@@ -109,36 +109,79 @@ local function gui_initSettingsWindow()
     local description_conventionOptions_townNames = api.gui.comp.TextView.new("{townNames} -> Town1 - Town2")
     namingConventionLayout:addItem(description_conventionOptions_townNames)
 
+    -- TRANSPORT TYPE SETTINGS
+    local transportTypeSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local transportTypeSettingsWrapper = api.gui.comp.Component.new("transportTypeSettingsWrapper")
+    transportTypeSettingsWrapper:setLayout(transportTypeSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Transport Types"), transportTypeSettingsWrapper)
+
+    -- LINE TYPE SETTINGS
+    local lineTypeSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local lineTypeSettingsWrapper = api.gui.comp.Component.new("lineTypeSettingsWrapper")
+    lineTypeSettingsWrapper:setLayout(lineTypeSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Line Types"), lineTypeSettingsWrapper)
+
+    -- CARGO TYPE SETTINGS
+    local cargoTypeSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local cargoTypeSettingsWrapper = api.gui.comp.Component.new("cargoTypeSettingsWrapper")
+    cargoTypeSettingsWrapper:setLayout(cargoTypeSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Cargo Types"), cargoTypeSettingsWrapper)
+
+    -- TOWN NAME SETTINGS
+    local townNameSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local townNameSettingsWrapper = api.gui.comp.Component.new("townNameSettingsWrapper")
+    townNameSettingsWrapper:setLayout(townNameSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Town Names"), townNameSettingsWrapper)
+
+    -- LINE NUMBER SETTINGS
+    local lineNumberSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local lineNumberSettingsWrapper = api.gui.comp.Component.new("lineNumberSettingsWrapper")
+    lineNumberSettingsWrapper:setLayout(lineNumberSettingsLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Line Numbers"), lineNumberSettingsWrapper)
+
+    -- DEBUG
+    local debugLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local debugWrapper = api.gui.comp.Component.new("debugWrapper")
+    debugWrapper:setLayout(debugLayout)
+    tabWidget:addTab(api.gui.comp.TextView.new("Debug"), debugWrapper)
+
+
     -- WINDOW CREATION
     gui_settingsWindow = api.gui.comp.Window.new("Auto Line Namer Settings", tabWidget)
+    tabWidget:setCurrentTab(0, false)
     gui_settingsWindow:setTitle("Auto Line Namer Settings")
     gui_settingsWindow:addHideOnCloseHandler()
+    gui_settingsWindow:onClose(function()
+        tabWidget:setCurrentTab(0, false)
+    end)
     gui_settingsWindow:setMovable(true)
     gui_settingsWindow:setPinButtonVisible(true)
     gui_settingsWindow:setResizable(false)
-    gui_settingsWindow:setSize(api.gui.util.Size.new(750, 500))
+    gui_settingsWindow:setSize(api.gui.util.Size.new(850, 500))
     -- TODO: Setting the position here seems to cause the window to be invisible (or outside the screen, or something...)
     --gui_settingsWindow:setPosition(100, 100)
     gui_settingsWindow:setPinned(true)
     gui_settingsWindow:setVisible(false, false)
 end
 
+local function handleGuiEvents(filename, id, name, param)
+    if filename ~= "auto_line_namer.lua" or id ~= "settings_gui" then
+        return
+    end
+
+    if name == "linemanager_enabled" then
+        state.linanamerSettings.enabled = param
+        log.info("Auto Line Namer enabled: " .. tostring(param))
+    elseif name == "tagPrefix" then
+        state.linanamerSettings.tagPrefix = param
+        log.info("Tag prefix set to: " .. param)
+    end
+end
+
 ---@diagnostic disable-next-line: lowercase-global
 function data()
     return {
-        handleEvent = function(filename, id, name, param)
-            if filename == "auto_line_namer.lua" then
-                if id == "settings_gui" then
-                    if name == "linemanager_enabled" then
-                        state.linanamerSettings.enabled = param
-                        log.info("Auto Line Namer enabled: " .. tostring(param))
-                    elseif name == "tagPrefix" then
-                        state.linanamerSettings.tagPrefix = param
-                        log.info("Tag prefix set to: " .. param)
-                    end
-                end
-            end
-        end,
+        handleEvent = handleGuiEvents,
         update = renameLines,
         guiInit = function()
             gui_initSettingsWindow()
