@@ -40,7 +40,6 @@ local function gui_initSettingsWindow()
             gameInfoLayout = gameInfoLayout:getLayout()
             if gameInfoLayout then
                 local button = api.gui.comp.Button.new(api.gui.comp.TextView.new("[ALN]"), true)
-                button:addTooltip("Auto Line Namer Settings")
                 button:onClick(gui_LMButtonClick)
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
                 gameInfoLayout:addItem(button)
@@ -333,6 +332,9 @@ local function handleGuiEvents(filename, id, name, param)
     elseif name == "tagPrefix" then
         state.linanamerSettings.tagPrefix = param
         log.info("Tag prefix set to: " .. param)
+    elseif name == "activeConvention" then
+        state.linanamerSettings.activeConvention = param
+        log.info("Active convention set to: " .. param)
     elseif name == "transportType_roadPassenger" then
         state.linanamerSettings.transportType.roadPassenger = param
     elseif name == "transportType_roadCargo" then
@@ -353,6 +355,18 @@ local function handleGuiEvents(filename, id, name, param)
         state.linanamerSettings.transportType.airCargo = param
     elseif name == "transportType_unknown" then
         state.linanamerSettings.transportType.unknown = param
+    elseif name == "lineType_localLineAddon" then
+        state.linanamerSettings.lineType.localLineAddon = param
+    elseif name == "lineType_intercityLineAddon" then
+        state.linanamerSettings.lineType.intercityLineAddon = param
+    elseif name == "lineType_regionalLineAddon" then
+        state.linanamerSettings.lineType.regionalLineAddon = param
+    elseif name == "cargoType_wrapper" then
+        state.linanamerSettings.cargoType.wrapper = param
+    elseif name == "cargoType_separator" then
+        state.linanamerSettings.cargoType.separator = param
+    elseif name == "cargoType_showType" then
+        state.linanamerSettings.cargoType.showType = param
     end
 end
 
