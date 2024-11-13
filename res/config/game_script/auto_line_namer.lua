@@ -347,36 +347,52 @@ local function handleGuiEvents(filename, id, name, param)
         log.info("Settings reset to default.")
     elseif name == "transportType_roadPassenger" then
         state.linanamerSettings.transportType.roadPassenger = param
+        log.info("Road Passenger naming set to: " .. param)
     elseif name == "transportType_roadCargo" then
         state.linanamerSettings.transportType.roadCargo = param
+        log.info("Road Cargo naming set to: " .. param)
     elseif name == "transportType_tramPassenger" then
         state.linanamerSettings.transportType.tramPassenger = param
+        log.info("Tram Passenger naming set to: " .. param)
     elseif name == "transportType_trainPassenger" then
         state.linanamerSettings.transportType.trainPassenger = param
+        log.info("Train Passenger naming set to: " .. param)
     elseif name == "transportType_trainCargo" then
         state.linanamerSettings.transportType.trainCargo = param
+        log.info("Train Cargo naming set to: " .. param)
     elseif name == "transportType_waterPassenger" then
         state.linanamerSettings.transportType.waterPassenger = param
+        log.info("Water Passenger naming set to: " .. param)
     elseif name == "transportType_waterCargo" then
         state.linanamerSettings.transportType.waterCargo = param
+        log.info("Water Cargo naming set to: " .. param)
     elseif name == "transportType_airPassenger" then
         state.linanamerSettings.transportType.airPassenger = param
+        log.info("Air Passenger naming set to: " .. param)
     elseif name == "transportType_airCargo" then
         state.linanamerSettings.transportType.airCargo = param
+        log.info("Air Cargo naming set to: " .. param)
     elseif name == "transportType_unknown" then
         state.linanamerSettings.transportType.unknown = param
+        log.info("Unknown naming set to: " .. param)
     elseif name == "lineType_localLineAddon" then
         state.linanamerSettings.lineType.localLineAddon = param
+        log.info("Local Line naming set to: " .. param)
     elseif name == "lineType_intercityLineAddon" then
         state.linanamerSettings.lineType.intercityLineAddon = param
+        log.info("Intercity Line naming set to: " .. param)
     elseif name == "lineType_regionalLineAddon" then
         state.linanamerSettings.lineType.regionalLineAddon = param
+        log.info("Regional Line naming set to: " .. param)
     elseif name == "cargoType_wrapper" then
         state.linanamerSettings.cargoType.wrapper = param
+        log.info("Cargo Type wrapper set to: " .. param)
     elseif name == "cargoType_separator" then
         state.linanamerSettings.cargoType.separator = param
+        log.info("Cargo Type separator set to: " .. param)
     elseif name == "cargoType_showType" then
         state.linanamerSettings.cargoType.showType = param
+        log.info("Cargo Type show type set to: " .. param)
     end
 end
 
@@ -387,6 +403,13 @@ function data()
         update = renameLines,
         guiInit = function()
             gui_initSettingsWindow()
+        end,
+        save = function()
+            return state
+        end,
+        load = function(loadedState)
+            if loadedState == nil or next(loadedState) == nil then return end
+            state = loadedState
         end,
     }
 end
