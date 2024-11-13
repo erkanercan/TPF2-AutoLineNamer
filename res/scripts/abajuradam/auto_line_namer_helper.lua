@@ -123,15 +123,15 @@ local function getCargoTypeStringFromConvention(cargoTypeName)
     --- @type "full"|"short"|"none"
     local showType = cargoTypeSettings.showType
     -- If show type is none then return empty string.
-    if showType == "none" then
+    if showType == 2 then
         cargoTypeString = ""
     end
     -- If show type is full then return the cargo type name.
-    if showType == "full" then
+    if showType == 0 then
         cargoTypeString = cargoTypeName
     end
     -- If show type is short then return the shortened name of the cargo type.
-    if showType == "short" then
+    if showType == 1 then
         -- We already have the full name of the cargo type. We can get the short from the full name.
         -- But keep in mind, some cargo types can have multiple words in their names.
         -- We can get the short by getting the first 3 letters of each word in the cargo type name.
@@ -173,9 +173,9 @@ local function buildCargoTypeString(lineData)
 
     --- @type "paranthesis"|"squareBracket"|"none"
     local cargoTypeWrapper = settings.linanamerSettings.cargoType.wrapper
-    if cargoTypeWrapper == "paranthesis" then
+    if cargoTypeWrapper == 0 then
         cargoTypeString = "(" .. cargoTypeString .. ")"
-    elseif cargoTypeWrapper == "squareBracket" then
+    elseif cargoTypeWrapper == 1 then
         cargoTypeString = "[" .. cargoTypeString .. "]"
     end
     return cargoTypeString
