@@ -40,9 +40,19 @@ local initialState = {
             regionalLineAddon = "RE",  -- regional line
         },
         cargoType = {
-            wrapper = "paranthesis", -- paranthesis, squareBracket, or none
-            separator = ", ",        -- separator between cargo types
-            showType = "full",       -- full, short, or none
+            wrapperMap = {
+                paranthesis = 0,
+                squareBracket = 1,
+                none = 2,
+            },
+            showTypeMap = {
+                full = 0,
+                short = 1,
+                none = 2,
+            },
+            wrapper = 0,     -- paranthesis, squareBracket, or none
+            separator = ",", -- separator between cargo types
+            showType = 0,    -- full, short, or none
         },
         lineNumber = {
             separator = "-", -- separator between line number and line name. it can be either "-", " ", or "#"
