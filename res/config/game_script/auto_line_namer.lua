@@ -92,6 +92,13 @@ local function gui_initSettingsWindow()
     generalLabelLayout:addItem(header_ActiveConvention)
     generalInputLayout:addItem(textInputField_activeConvention)
 
+    --[[     local button_resetSettings = api.gui.comp.Button.new(api.gui.comp.TextView.new("Reset Settings"), true)
+    button_resetSettings:onClick(function()
+        ALNHelper.sendScriptCommand("settings_gui", "linemanager_reset", false)
+    end)
+    button_resetSettings:setEnabled(false)
+    generalInputLayout:addItem(button_resetSettings) ]]
+
     generalSettingsLayout:addItem(generalLabelLayout)
     generalSettingsLayout:addItem(generalInputLayout)
 
@@ -335,6 +342,9 @@ local function handleGuiEvents(filename, id, name, param)
     elseif name == "activeConvention" then
         state.linanamerSettings.activeConvention = param
         log.info("Active convention set to: " .. param)
+    elseif name == "linemanager_reset" then
+        state.linanamerSettings = state.resetSettings()
+        log.info("Settings reset to default.")
     elseif name == "transportType_roadPassenger" then
         state.linanamerSettings.transportType.roadPassenger = param
     elseif name == "transportType_roadCargo" then

@@ -76,4 +76,10 @@ function state.setSettings(settings)
     state = settings
 end
 
+--- Resets the settings to the initial state.
+--- @return nil
+function state.resetSettings()
+
+end
+
 return state
