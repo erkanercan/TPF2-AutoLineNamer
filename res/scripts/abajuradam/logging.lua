@@ -6,7 +6,7 @@ local INFO = 3
 local WARN = 4
 local ERROR = 5
 
-local DEFAULT = DEBUG
+local DEFAULT = WARN
 
 local levelNames = {
     [TRACE] = 'TRACE',

@@ -60,6 +60,8 @@ function data()
                                 State.setTransportType(subKey, subValue)
                             elseif key == "lineType" then
                                 State.setLineType(subKey, subValue)
+                            elseif key == 'cargoType' then
+                                State.setCargoType(subKey, subValue)
                             end
                         end
                     else

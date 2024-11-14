@@ -224,7 +224,7 @@ local function buildTransportTypeString(lineData)
         transportTypeString = cargoType == "P" and transportTypeNamingSettings.airPassenger or
             transportTypeNamingSettings.airCargo
     else
-        transportTypeString = "UNK"
+        transportTypeString = transportTypeNamingSettings.unknown
     end
 
     return transportTypeString

@@ -80,7 +80,6 @@ end
 
 function State.getEnabled()
     local instance = State.instance or State.init()
-    log.debug("Getting enabled state: " .. tostring(instance.autoLineNamerSettings.enabled))
     return instance.autoLineNamerSettings.enabled
 end
 
@@ -144,9 +143,7 @@ function State.setEnabled(enabled)
         return
     end
     local instance = State.instance or State.init() -- Get single instance
-    log.debug("Setting enabled to: " .. tostring(enabled))
     instance.autoLineNamerSettings.enabled = enabled
-    log.debug("Current enabled state: " .. tostring(instance.autoLineNamerSettings.enabled))
 end
 
 function State.setActiveConvention(convention)
@@ -172,6 +169,11 @@ function State.setLineType(key, value)
 end
 
 -- Cargo Type Setters
+function State.setCargoType(key, value)
+    local instance = State.instance or State.init()
+    instance.autoLineNamerSettings.cargoType[key] = value
+end
+
 function State.setCargoTypeWrapper(wrapper)
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.cargoType.wrapper = wrapper

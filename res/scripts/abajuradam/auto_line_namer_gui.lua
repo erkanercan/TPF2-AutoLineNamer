@@ -335,64 +335,64 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
         if currentState ~= param then
             log.error("State change failed! Expected: " .. tostring(param) .. " Got: " .. tostring(currentState))
         end
-        log.info("Auto Line Namer enabled: " .. tostring(State.getEnabled()))
+        log.debug("Auto Line Namer enabled: " .. tostring(State.getEnabled()))
     elseif name == "tagPrefix" then
         State.setTagPrefix(param)
-        log.info("Tag prefix set to: " .. param)
+        log.debug("Tag prefix set to: " .. param)
     elseif name == "activeConvention" then
         State.setActiveConvention(param)
-        log.info("Active convention set to: " .. param)
+        log.debug("Active convention set to: " .. param)
     elseif name == "linemanager_reset" then
         State.resetSettings()
-        log.info("Settings reset to default.")
+        log.debug("Settings reset to default.")
     elseif name == "transportType_roadPassenger" then
         State.setTransportType('roadPassenger', param)
-        log.info("Road Passenger naming set to: " .. param)
+        log.debug("Road Passenger naming set to: " .. param)
     elseif name == "transportType_roadCargo" then
         State.setTransportType('roadCargo', param)
-        log.info("Road Cargo naming set to: " .. param)
+        log.debug("Road Cargo naming set to: " .. param)
     elseif name == "transportType_tramPassenger" then
         State.setTransportType('tramPassenger', param)
-        log.info("Tram Passenger naming set to: " .. param)
+        log.debug("Tram Passenger naming set to: " .. param)
     elseif name == "transportType_trainPassenger" then
         State.setTransportType('trainPassenger', param)
-        log.info("Train Passenger naming set to: " .. param)
+        log.debug("Train Passenger naming set to: " .. param)
     elseif name == "transportType_trainCargo" then
         State.setTransportType('trainCargo', param)
-        log.info("Train Cargo naming set to: " .. param)
+        log.debug("Train Cargo naming set to: " .. param)
     elseif name == "transportType_waterPassenger" then
         State.setTransportType('waterPassenger', param)
-        log.info("Water Passenger naming set to: " .. param)
+        log.debug("Water Passenger naming set to: " .. param)
     elseif name == "transportType_waterCargo" then
         State.setTransportType('waterCargo', param)
-        log.info("Water Cargo naming set to: " .. param)
+        log.debug("Water Cargo naming set to: " .. param)
     elseif name == "transportType_airPassenger" then
         State.setTransportType('airPassenger', param)
-        log.info("Air Passenger naming set to: " .. param)
+        log.debug("Air Passenger naming set to: " .. param)
     elseif name == "transportType_airCargo" then
         State.setTransportType('airCargo', param)
-        log.info("Air Cargo naming set to: " .. param)
+        log.debug("Air Cargo naming set to: " .. param)
     elseif name == "transportType_unknown" then
         State.setTransportType('unknown', param)
-        log.info("Unknown naming set to: " .. param)
+        log.debug("Unknown naming set to: " .. param)
     elseif name == "lineType_localLineAddon" then
         State.setLineType('localLineAddon', param)
-        log.info("Local Line naming set to: " .. param)
+        log.debug("Local Line naming set to: " .. param)
     elseif name == "lineType_intercityLineAddon" then
         State.setLineType('intercityLineAddon', param)
-        log.info("Intercity Line naming set to: " .. param)
+        log.debug("Intercity Line naming set to: " .. param)
     elseif name == "lineType_regionalLineAddon" then
         State.setLineType('regionalLineAddon', param)
-        log.info("Regional Line naming set to: " .. param)
+        log.debug("Regional Line naming set to: " .. param)
     elseif name == "cargoType_wrapper" then
         State.setCargoTypeWrapper(param)
-        log.info("Cargo Type wrapper set to: " .. param)
+        log.debug("Cargo Type wrapper set to: " .. param)
     elseif name == "cargoType_separator" then
         State.setCargoTypeSeparator(param)
-        log.info("Cargo Type separator set to: " .. param)
+        log.debug("Cargo Type separator set to: " .. param)
     elseif name == "cargoType_showType" then
         State.setCargoTypeShowType(param)
-        log.info("Cargo Type show type set to: " .. param)
+        log.debug("Cargo Type show type set to: " .. param)
     elseif name == "debug_logLevel" then
         log.setLevel(param)
     end
