@@ -11,8 +11,16 @@ end
 -- Check if a line name can be updated (default names are considered updatable)
 function ALNHelper.isUpdatableName(name)
     local lowerName = string.lower(name)
-    return name == "" or name:match("^%s*$") or lowerName == "r" or lowerName == "reload" or name:match("^Line %d+$") or
-        lowerName:match("^unk")
+    local noUpdatePrefix = State.getTagPrefix()
+
+    return name == ""
+        or name:match("^%s*$")
+        or lowerName == "r"
+        or lowerName == "reload"
+        or name:match("^Line %d+$")
+        or lowerName:match("^unk")
+        -- or name does not start with the prefix
+        or not name:match("^" .. noUpdatePrefix)
 end
 
 --- Retrieves all towns from a line.
@@ -146,9 +154,13 @@ end
 local function buildCargoTypeString(lineData)
     local cargoTypeString = ""
     local cargoTypes = {}
+    local allCargoTypes = {}
     for _, vehicle in ipairs(lineData.vehicles) do
         for _, cargoName in ipairs(vehicle.cargoNames) do
-            table.insert(cargoTypes, cargoName)
+            if not allCargoTypes[cargoName] then
+                table.insert(cargoTypes, cargoName)
+                allCargoTypes[cargoName] = true
+            end
         end
     end
 
@@ -266,7 +278,7 @@ function ALNHelper.generateLineName(lineId)
     local lastTownShort = getTownNameInitials(lineData.towns[#lineData.towns])
     local townNamesString = firstTownShort
     if #lineData.towns > 1 and firstTownShort ~= lastTownShort then
-        townNamesString = townNamesString .. " - " .. lastTownShort
+        townNamesString = townNamesString .. "-" .. lastTownShort
     end
     -- Replace the {townNames} with the actual town names string.
     convention = string.gsub(convention, "{townNames}", townNamesString)

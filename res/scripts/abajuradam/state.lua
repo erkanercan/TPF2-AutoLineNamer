@@ -26,8 +26,6 @@ function State.init()
             autoLineNamerSettings = {
                 activeConvention = "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}",
                 tagPrefix = "[NoAuto]",
-                namedLines = {},
-                prefix = "^",
                 enabled = true,
                 autoUpdate = {
                     enabled = true,
@@ -205,7 +203,6 @@ function State.resetSettings()
     State.autoLineNamerSettings = {
         activeConvention = "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}",
         tagPrefix = "[NoAuto]",
-        namedLines = {},
         prefix = "^",
         enabled = true,
         autoUpdate = {

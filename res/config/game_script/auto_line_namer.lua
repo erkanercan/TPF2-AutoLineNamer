@@ -21,7 +21,7 @@ local function renameLines()
         local lineName = ALNHelper.getLineName(lineId)
 
         -- Check if the line name is updatable or has the default prefix
-        if ALNHelper.isUpdatableName(lineName) or lineName:sub(1, 1) == prefix then
+        if ALNHelper.isUpdatableName(lineName) then
             local newName = ALNHelper.generateLineName(lineId)
             api.cmd.sendCommand(api.cmd.make.setName(lineId, newName))
             log.info("Renamed line " .. lineId .. " to: " .. newName)
