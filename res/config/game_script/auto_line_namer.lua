@@ -44,7 +44,6 @@ function data()
             GUIHelper.gui_initSettingsWindow()
         end,
         save = function()
-            log.debug("Saving state")
             return State.getSettings()
         end,
         load = function(loadedState)

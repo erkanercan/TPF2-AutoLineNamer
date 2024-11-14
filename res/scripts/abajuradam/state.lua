@@ -47,23 +47,12 @@ function State.init()
                     regionalLineAddon = "RE",  -- regional line
                 },
                 cargoType = {
-                    wrapperMap = {
-                        paranthesis = 0,
-                        squareBracket = 1,
-                        none = 2,
-                    },
                     showTypeMap = {
                         full = 0,
                         short = 1,
-                        none = 2,
                     },
-                    wrapper = 0,     -- paranthesis, squareBracket, or none
                     separator = ",", -- separator between cargo types
                     showType = 0,    -- full, short, or none
-                },
-                lineNumber = {
-                    separator = "-", -- separator between line number and line name. it can be either "-", " ", or "#"
-                    show = true,     -- show line number
                 },
             },
         }
@@ -121,11 +110,6 @@ function State.getCargoTypeSettings()
     return instance.autoLineNamerSettings.cargoType
 end
 
-function State.getCargoTypeWrapper()
-    local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.cargoType.wrapper
-end
-
 function State.getCargoTypeSeparator()
     local instance = State.instance or State.init()
     return instance.autoLineNamerSettings.cargoType.separator
@@ -174,11 +158,6 @@ function State.setCargoType(key, value)
     instance.autoLineNamerSettings.cargoType[key] = value
 end
 
-function State.setCargoTypeWrapper(wrapper)
-    local instance = State.instance or State.init()
-    instance.autoLineNamerSettings.cargoType.wrapper = wrapper
-end
-
 function State.setCargoTypeSeparator(separator)
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.cargoType.separator = separator
@@ -215,20 +194,13 @@ function State.resetSettings()
             regionalLineAddon = "RE",
         },
         cargoType = {
-            wrapperMap = {
-                paranthesis = 0,
-                squareBracket = 1,
-                none = 2,
-            },
             showTypeMap = {
                 full = 0,
                 short = 1,
-                none = 2,
             },
-            wrapper = 0,
             separator = ",",
             showType = 0,
-        }
+        },
     }
     return State.autoLineNamerSettings
 end

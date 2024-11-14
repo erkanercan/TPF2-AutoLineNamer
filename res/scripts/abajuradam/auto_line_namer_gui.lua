@@ -5,6 +5,10 @@ local gui_settingsWindow = nil
 local GUIHelper = {}
 
 local function gui_LMButtonClick()
+    if not gui_settingsWindow then
+        log.error("Settings window is nil.")
+        return
+    end
     if not gui_settingsWindow:isVisible() then
         gui_settingsWindow:setVisible(true, false)
     else
@@ -236,18 +240,6 @@ function GUIHelper.gui_initSettingsWindow()
     local cargoTypeInputLayout = api.gui.layout.BoxLayout.new("VERTICAL")
 
     -- Settings for the cargo types, like logs, passengers, etc.
-    local description_CargoTypeWrapper = api.gui.comp.TextView.new("Wrapper: ")
-    local combobox_CargoTypeWrapper = api.gui.comp.ComboBox.new()
-    combobox_CargoTypeWrapper:addItem("Paranthesis")
-    combobox_CargoTypeWrapper:addItem("Square Bracket")
-    combobox_CargoTypeWrapper:addItem("None")
-    combobox_CargoTypeWrapper:setSelected(State.getCargoTypeWrapper(), false)
-    combobox_CargoTypeWrapper:onIndexChanged(function(index)
-        ALNHelper.sendScriptCommand("settings_gui", "cargoType_wrapper", index)
-    end)
-    cargoTypeLabelLayout:addItem(description_CargoTypeWrapper)
-    cargoTypeInputLayout:addItem(combobox_CargoTypeWrapper)
-
     local description_CargoTypeSeparator = api.gui.comp.TextView.new("Separator: ")
     local textInputField_CargoTypeSeparator = api.gui.comp.TextInputField.new("Cargo Type Separator")
     textInputField_CargoTypeSeparator:setText(State.getCargoTypeSeparator(), false)
@@ -261,7 +253,6 @@ function GUIHelper.gui_initSettingsWindow()
     local combobox_CargoTypeShowType = api.gui.comp.ComboBox.new()
     combobox_CargoTypeShowType:addItem("Full")
     combobox_CargoTypeShowType:addItem("Short")
-    combobox_CargoTypeShowType:addItem("None")
     combobox_CargoTypeShowType:setSelected(State.getCargoTypeShowType(), false)
     combobox_CargoTypeShowType:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_showType", index)
@@ -274,23 +265,21 @@ function GUIHelper.gui_initSettingsWindow()
 
 
     -- TOWN NAME SETTINGS
-    local townNameSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local townNameSettingsLayout = api.gui.layout.BoxLayout.new("HORIZONTAL")
     local townNameSettingsWrapper = api.gui.comp.Component.new("townNameSettingsWrapper")
     townNameSettingsWrapper:setLayout(townNameSettingsLayout)
     tabWidget:addTab(api.gui.comp.TextView.new("Town Names"), townNameSettingsWrapper)
 
-    -- LINE NUMBER SETTINGS
-    local lineNumberSettingsLayout = api.gui.layout.BoxLayout.new("VERTICAL")
-    local lineNumberSettingsWrapper = api.gui.comp.Component.new("lineNumberSettingsWrapper")
-    lineNumberSettingsWrapper:setLayout(lineNumberSettingsLayout)
-    tabWidget:addTab(api.gui.comp.TextView.new("Line Numbers"), lineNumberSettingsWrapper)
-
     -- DEBUG
-    local debugLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local debugLayout = api.gui.layout.BoxLayout.new("HORIZONTAL")
     local debugWrapper = api.gui.comp.Component.new("debugWrapper")
     debugWrapper:setLayout(debugLayout)
     tabWidget:addTab(api.gui.comp.TextView.new("Debug"), debugWrapper)
 
+    local cargoTypeLabelLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local cargoTypeInputLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+
+    local description_LogLevel = api.gui.comp.TextView.new("Log Level: ")
     local combobox_LogLevel = api.gui.comp.ComboBox.new()
     combobox_LogLevel:addItem("TRACE")
     combobox_LogLevel:addItem("DEBUG")
@@ -301,7 +290,11 @@ function GUIHelper.gui_initSettingsWindow()
     combobox_LogLevel:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "debug_logLevel", index + 1)
     end)
-    debugLayout:addItem(combobox_LogLevel)
+    cargoTypeLabelLayout:addItem(description_LogLevel)
+    cargoTypeInputLayout:addItem(combobox_LogLevel)
+
+    debugLayout:addItem(cargoTypeLabelLayout)
+    debugLayout:addItem(cargoTypeInputLayout)
 
 
     -- WINDOW CREATION
@@ -384,9 +377,6 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
     elseif name == "lineType_regionalLineAddon" then
         State.setLineType('regionalLineAddon', param)
         log.debug("Regional Line naming set to: " .. param)
-    elseif name == "cargoType_wrapper" then
-        State.setCargoTypeWrapper(param)
-        log.debug("Cargo Type wrapper set to: " .. param)
     elseif name == "cargoType_separator" then
         State.setCargoTypeSeparator(param)
         log.debug("Cargo Type separator set to: " .. param)

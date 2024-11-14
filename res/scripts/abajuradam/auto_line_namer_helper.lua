@@ -119,10 +119,6 @@ local function getCargoTypeStringFromConvention(cargoTypeName)
     -- Get the show type from the settings. Show type can be full, short, or none.
     --- @type 0|1|2
     local showType = State.getCargoTypeShowType()
-    -- If show type is none then return empty string.
-    if showType == 2 then
-        cargoTypeString = ""
-    end
     -- If show type is full then return the cargo type name.
     if showType == 0 then
         cargoTypeString = cargoTypeName
@@ -167,13 +163,6 @@ local function buildCargoTypeString(lineData)
         end
     end
 
-    --- @type 0|1|2
-    local cargoTypeWrapper = State.getCargoTypeWrapper()
-    if cargoTypeWrapper == 0 then
-        cargoTypeString = "(" .. cargoTypeString .. ")"
-    elseif cargoTypeWrapper == 1 then
-        cargoTypeString = "[" .. cargoTypeString .. "]"
-    end
     return cargoTypeString
 end
 
