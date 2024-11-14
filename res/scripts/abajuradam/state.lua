@@ -56,7 +56,7 @@ function State.init()
                         short = 1,
                     },
                     separator = ",", -- separator between cargo types
-                    showType = 0,    -- full, short, or none
+                    showType = 0,    -- full, short
                 },
             },
         }

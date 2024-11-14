@@ -1,97 +1,175 @@
-# Automatic Line Naming (ALN) for Transport Fever 2
+# Auto Line Namer (ALN) - User Manual
 
-[Steam Workshop Link](https://steamcommunity.com/sharedfiles/filedetails/?id=3360333659)
+## TL;DR How to Use
 
-## Description
+1. Subscribe to the mod on [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3360333659).
+2. Open the game and start a new or loaded save.
+3. Click the `[ALN]` button in the game info bar.
+4. Enable auto naming and customize settings as needed.
+5. Close the settings window and start creating lines.
+6. Auto Line Namer will automatically rename when you add some stops to the line and click the add stop button or close the line editor.
+7. If you want to rename a line manually, set the line name to `r` or `reload` and click - unclick the add stop button.
+8. If you don't want to keep renaming the lines over and over after all the cargo loaded, you can set the auto update interval in the settings window and enable it, so the lines will be renamed automatically in the specified interval.
 
-The Automatic Line Naming (ALN) mod for Transport Fever 2 dynamically generates names for player-created lines based on route details, transport type, and whether they carry cargo or passengers. This mod simplifies gameplay by automatically creating unique, informative names for each line, helping you keep track of your network effortlessly. Featuring configurable settings, renaming options, and detailed logging, ALN lets you focus on managing your network without the hassle of manual naming.
+## Overview
 
----
+Auto Line Namer automatically generates consistent naming patterns for transport lines in Transport Fever 2 based on their properties and route details.
 
-## Current Features
+## Installation
 
-### Automated Naming Convention
+Subscribe to the mod on [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3360333659).
 
-Each line name follows this structure:
+## Core Features
+
+- Automatic line naming based on transport type, cargo, and connected towns
+- Interval-based updates for cargo type detection
+- Manual rename triggers
+- Customizable naming patterns
+- Exclude specific lines from auto-naming
+
+## How Line Naming Works
+
+Lines are renamed in two cases:
+
+1. When closing line editor after changes
+2. At specified intervals (for accurate cargo detection)
+
+Manual rename triggers:
+
+- Set line name to `r` or `reload`
+- Use default names (`Line 1`, `UNK`)
+
+After that you need to click - unclick the add stop button to apply the new name.
+
+## Settings Guide
+
+Access via `[ALN]` button in game info bar.
+
+All the default settings can be changed in the settings window.
+
+### General Settings
+
+| Setting            | Description                                     | Example                                    |
+| ------------------ | ----------------------------------------------- | ------------------------------------------ |
+| Enable auto naming | Toggle main functionality                       | -                                          |
+| Disable Prefix     | Prevents auto-naming for lines with this prefix | `[NoAuto]`                                 |
+| Active Convention  | Naming pattern variables                        | `{transportType} - {townNames} {lineType}` |
+| Auto Update        | Interval-based renaming (minutes)               | Every 1 minute                             |
+
+### Naming Variables
+
+You can use the following variables in the naming pattern and set them in the settings window:
+
+- `{transportType}`: Mode of transport (RP, RC, TP, TC, WP, WC, AP, AC, UNK, etc. Customizable in settings)
+- `{cargoTypes}`: Cargo being carried (multiple types separated by your choice of character- default is `,`)
+- `{townNames}`: Connected town names (start-end)
+- `{lineType}`: Line classification (local, intercity, regional)
+- `{lineNumber}`: Unique identifier as line id
+
+### Transport Type Abbreviations
+
+| Type            | Default |
+| --------------- | ------- |
+| Road Passenger  | RP      |
+| Road Cargo      | RC      |
+| Train Passenger | TP      |
+| Train Cargo     | TC      |
+| Water Passenger | WP      |
+| Water Cargo     | WC      |
+| Air Passenger   | AP      |
+| Air Cargo       | AC      |
+| Unknown         | UNK     |
+
+### Line Type Abbreviations
+
+| Type      | Abbrev | Description       |
+| --------- | ------ | ----------------- |
+| Local     | LO     | Within one town   |
+| Intercity | IC     | Between two towns |
+| Regional  | RE     | Through 3+ towns  |
+
+### Cargo Settings
+
+- Separator: Character between multiple cargo types
+- Show Type: Full names or abbreviations
+
+### Town Name Settings
+
+- Show Type: Full or short names
+
+### Debug Options
+
+Log levels: TRACE, DEBUG, INFO, WARN, ERROR
+
+## Example Names
 
 ```
-    [Transport Type] - [(Cargo Types)]: [First Town Initials] - [Last Town Initials] [Line Type] #[Count]
+Convention: {transportType} - {townNames} {lineType}
+Settings: Road Passenger: RP, Intercity: IC, Town Show Type: Full
+Output: RP - Town A, Town B IC
 ```
 
-#### Components of the Naming Convention
+```
+Convention: {transportType} - {cargoTypes} - {townNames} {lineType}
+Settings: Road Passenger: RP, Town Show Type: Full, Local: LO
+Output: RP - Passengers - Town A LO
+```
 
-- **Transport Type**: Abbreviation based on transport mode (e.g., `RC` for Road Cargo, `TP` for Train Passenger).
-- **Cargo Types**: If applicable, displays the types of cargo in parentheses (e.g., `(Grain)`), or is left blank for passenger-only lines.
-- **Town Initials**: Up to three-letter initials of the starting and ending towns (e.g., `Spr` for Springfield).
-- **Line Type**:
-  - **LO (Local)**: A line that operates within a single town, typically shorter routes such as urban buses or short-distance trams.
-  - **IC (Intercity)**: A line that connects two distinct towns, often medium-range routes like regional trains, intercity buses, or cargo trucks between two locations.
-  - **RE (Regional)**: A line that passes through three or more towns, typically longer routes covering multiple cities or regions, like express trains or multi-stop cargo routes.
-- **Count**: If multiple lines share the same name, a unique count (e.g., `#1`, `#2`) is added to avoid duplicates.
+```
+Convention: {transportType} - {cargoTypes} - {townNames} {lineType}
+Settings: Road Passenger: RP, Town Show Type: Short, Local: LO
+Output: RP - Passengers - Abc LO -- Town name with 3 characters
+```
 
-#### Examples
+```
+Convention: {transportType} - {cargoTypes} - {townNames} {lineType}
+Settings: Road Cargo: TRC, Town Show Type: Short, Local: LO
+Output: TRC - Logs, Gravel - Abc LO
+```
 
-- **Road Cargo Line**: `RC - (Grain): Spr - Cap IC #1`
-- **Passenger Train Line**: `TP - Spr - She IC`
-- **Air Passenger Line**: `AP - Cap - Ogd LO`
+```
+Convention: {transportType} - [{cargoTypes}] - {townNames} {lineType}
+Settings: Road Cargo: TRUCK, Town Show Type: Short, Local: LO
+Output: TRUCK - [Logs, Gravel] - Abc LO
+```
 
-### Transport Type Detection
+## Important Notes
 
-Differentiates between passenger and cargo lines across all transport types, with shorthand for each mode.
+- Initial cargo types may be incorrect until:
+  - Vehicles are assigned
+  - Cargo is loaded
+  - Auto-update interval passes
+- Prevent auto-naming by:
+  - Adding `[NoAuto]` prefix
+  - Disabling in settings
+- Force rename by:
+  - Using `r` or `reload` as name
+  - Waiting for auto-update
+  - Closing/reopening line editor
 
-### Renaming Options
+## Troubleshooting
 
-- **Manual Refresh**: Set a line’s name to `"reload"` or `"r"` to trigger an automatic renaming based on the current route and transport type.
-- **Default Naming**: Lines with default values (e.g., `"Line 1"`, `"Line 2"`) or prefixed with `"UNK"` are automatically renamed.
-- **Tag Exclusion**: Use the `[NoAuto]` tag to exclude lines from auto-renaming.
+- **No rename**: Check for custom name or `[NoAuto]` prefix
+- **Wrong cargo**: Wait for vehicle loading or use manual rename
+- **Town name issues**: Verify stop connections
 
-### Customizable Settings
+## Feedback & Support
 
-- Adjust naming conventions or exclude lines from renaming.
-- Configurable logging to monitor mod actions and troubleshoot as needed.
+- [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3360333659)
+- [GitHub Issues](https://github.com/erkanercan/TPF2-AutoLineNamer/issues)
 
-### Logging for Transparency
+## FAQ
 
-Detailed log messages for actions like renaming, skipping lines, and detected cargo types.
-
----
-
-## Upcoming Features
-
-- **In-Game Customization GUI**: Directly adjust naming conventions, logging levels, and tag exclusions in-game.
-- **Additional Naming Patterns**: More flexible patterns, including customizable prefixes and suffixes.
-- **Support for Custom Cargo Types**: Enhanced detection for modded or custom cargo types to improve naming accuracy.
-
----
-
-## How to Use
-
-1. **Install the Mod**  
-   Subscribe on the Steam Workshop and enable it in Transport Fever 2’s mod settings.
-
-2. **Create a New Line**  
-   Set up a line as usual. ALN will automatically generate a name based on its details.
-
-3. **Rename Existing Lines**  
-   ALN renames existing lines with default or placeholder names. You can also rename a line by setting its name to `"reload"` or `"r"`.
-
-4. **Modify Settings (Optional)**  
-   Open `logging.lua` to adjust logging levels or enable extended logging.
-
----
-
-## Troubleshooting and Tips
-
-- **Why is my line not renamed?**  
-  The line may already have a custom name or might not meet renaming conditions (e.g., no assigned stops). Set the line name to `"reload"` or `"r"` to force a renaming.
-
-- **How do I exclude a line from renaming?**  
-  Use the `[NoAuto]` tag in the line name to prevent auto-renaming.
-
----
-
-## Notes
-
-This mod automatically names new and default-named lines, making it ideal for quickly expanding your network. For feedback or bug reports, create an issue here or please leave a comment on the mod’s [Steam Workshop page](https://steamcommunity.com/sharedfiles/filedetails/?id=3360333659)!
-
----
+- **Q**: How do I disable auto-naming for specific lines?
+  - **A**: Add `[NoAuto]` prefix to line name. You can change this in settings.
+- **Q**: Why are cargo types not detected correctly?
+  - **A**: Wait for vehicles to load cargo or use manual rename. In TPF2, cargo types are not immediately available, instead game defines some default cargo types for the vehicles.(For example, logs for all cargo trucks) So, the cargo types will be detected after the vehicles loaded some cargo.
+- **Q**: How can I rename lines manually?
+  - **A**: Set line name to `r` or `reload` and click - unclick the add stop button.
+  - **A**: Use default names (`Line 1`, `UNK`). After that you need to click - unclick the add stop button to apply the new name.
+- **Q**: Why are town names not showing up in line names?
+  - **A**: Verify that stops are connected to towns. If not, manually rename the line.
+- **Q**: Why did you remove auto naming, and now we need to click - unclick the add stop button to apply the new name?
+  - **A**: Unfortunately with the old method, game tries to rename the line almost 5 times in a second, and this causes some performance issues. So, I had to change the method to prevent this. Now, the line will be renamed after you click - unclick the add stop button. If I find a method to add a button next to line name in the line editor, I will add it to the mod.
+- **Q**: Why are the line names not updating after the cargo loaded?
+  - **A**: If you don't want to keep renaming the lines over and over after all the cargo loaded, you can set the auto update interval in the settings window and enable it, so the lines will be renamed automatically in the specified interval.
