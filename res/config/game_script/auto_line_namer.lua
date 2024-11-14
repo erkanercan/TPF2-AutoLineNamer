@@ -5,6 +5,8 @@ local GUIHelper = require 'abajuradam/auto_line_namer_gui'
 
 State.init()
 
+local lastUpdate = 0
+
 -- Rename lines based on generated name
 local function renameLines()
     local enabledStatus = State.getEnabled()
@@ -31,6 +33,22 @@ end
 ---@diagnostic disable-next-line: lowercase-global
 function data()
     return {
+        update = function()
+            if not State.getAutoUpdateEnabled() then
+                return
+            end
+
+            local currentTime = os.time()
+            local intervalMinutes = State.getAutoUpdateInterval()
+            local intervalSeconds = intervalMinutes * 60
+
+            -- Check if enough time has passed
+            if currentTime - lastUpdate >= intervalSeconds then
+                renameLines()
+                lastUpdate = currentTime
+                log.warn(string.format("Auto-renamed lines (interval: %d minutes)", intervalMinutes))
+            end
+        end,
         handleEvent = function(filename, id, name, param)
             GUIHelper.handleGuiEvents(filename, id, name, param)
         end,

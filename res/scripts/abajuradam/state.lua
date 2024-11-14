@@ -31,7 +31,7 @@ function State.init()
                 enabled = true,
                 autoUpdate = {
                     enabled = true,
-                    interval = 5,
+                    interval = 1,
                 },
                 transportType = {
                     roadPassenger = "RP",  -- road passenger
@@ -208,6 +208,10 @@ function State.resetSettings()
         namedLines = {},
         prefix = "^",
         enabled = true,
+        autoUpdate = {
+            enabled = true,
+            interval = 1,
+        },
         transportType = {
             roadPassenger = "RP",
             roadCargo = "RC",
