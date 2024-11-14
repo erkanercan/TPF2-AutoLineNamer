@@ -6,7 +6,7 @@ local INFO = 3
 local WARN = 4
 local ERROR = 5
 
-local DEFAULT = INFO
+local DEFAULT = DEBUG
 
 local levelNames = {
     [TRACE] = 'TRACE',
@@ -32,6 +32,10 @@ log.levels = {
 function log.setLevel(level)
     currentLogLevel = level or DEFAULT
     log.info("Logging level set to: " .. levelNames[currentLogLevel])
+end
+
+function log.getLevel()
+    return currentLogLevel
 end
 
 ---@param param boolean (optional) whether extended line info should used, default is false

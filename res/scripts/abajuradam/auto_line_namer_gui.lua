@@ -1,4 +1,4 @@
-local state = require 'abajuradam/state'
+local State = require 'abajuradam/state'
 local log = require 'abajuradam/logging'
 local ALNHelper = require 'abajuradam/auto_line_namer_helper'
 local gui_settingsWindow = nil
@@ -26,10 +26,10 @@ function GUIHelper.gui_initSettingsWindow()
                 gameInfoLayout:addItem(button)
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
             else
-                debugPrint("[Auto Line Namer] Error: gameInfoLayout layout is nil.")
+                log.error("gameInfoLayout layout is nil.")
             end
         else
-            debugPrint("[Auto Line Namer] Error: gameInfo component is nil.")
+            log.error("gameInfoLayout component is nil.")
         end
     end)
 
@@ -47,7 +47,7 @@ function GUIHelper.gui_initSettingsWindow()
     -- Toggle for enabling/disabling the Auto Line Namer
     local header_EnableLineManager = api.gui.comp.TextView.new("Enabling:")
     local checkBox_enableLineManager = api.gui.comp.CheckBox.new("Enable auto line naming")
-    checkBox_enableLineManager:setSelected(state.linanamerSettings.enabled, false)
+    checkBox_enableLineManager:setSelected(State.getEnabled(), false)
     checkBox_enableLineManager:onToggle(function(selected)
         ALNHelper.sendScriptCommand("settings_gui", "linemanager_enabled", selected)
     end)
@@ -57,7 +57,7 @@ function GUIHelper.gui_initSettingsWindow()
     -- Prefix for lines that should not be renamed
     local header_TagPrefix = api.gui.comp.TextView.new("Disable Prefix:")
     local textInputField_tagPrefix = api.gui.comp.TextInputField.new("Disable Prefix")
-    textInputField_tagPrefix:setText(state.linanamerSettings.tagPrefix, false)
+    textInputField_tagPrefix:setText(State.getTagPrefix(), false)
     textInputField_tagPrefix:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "tagPrefix", text)
     end)
@@ -66,7 +66,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local header_ActiveConvention = api.gui.comp.TextView.new("Active Convention:")
     local textInputField_activeConvention = api.gui.comp.TextInputField.new("Active Convention")
-    textInputField_activeConvention:setText(state.linanamerSettings.activeConvention, false)
+    textInputField_activeConvention:setText(State.getActiveConvention(), false)
     textInputField_activeConvention:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "activeConvention", text)
     end)
@@ -95,7 +95,7 @@ function GUIHelper.gui_initSettingsWindow()
     -- Settings for the transport types, like road passenger, road cargo, etc.
     local description_RoadPassenger = api.gui.comp.TextView.new("Road Passenger: ")
     local textInputField_RoadPassenger = api.gui.comp.TextInputField.new("Road Passenger")
-    textInputField_RoadPassenger:setText(state.linanamerSettings.transportType.roadPassenger, false)
+    textInputField_RoadPassenger:setText(State.getTransportType('roadPassenger'), false)
     textInputField_RoadPassenger:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_roadPassenger", text)
     end)
@@ -104,7 +104,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_TramPassenger = api.gui.comp.TextView.new("Tram Passenger: ")
     local textInputField_TramPassenger = api.gui.comp.TextInputField.new("Tram Passenger")
-    textInputField_TramPassenger:setText(state.linanamerSettings.transportType.tramPassenger, false)
+    textInputField_TramPassenger:setText(State.getTransportType('tramPassenger'), false)
     textInputField_TramPassenger:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_tramPassenger", text)
     end)
@@ -113,7 +113,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_TrainPassenger = api.gui.comp.TextView.new("Train Passenger: ")
     local textInputField_TrainPassenger = api.gui.comp.TextInputField.new("Train Passenger")
-    textInputField_TrainPassenger:setText(state.linanamerSettings.transportType.trainPassenger, false)
+    textInputField_TrainPassenger:setText(State.getTransportType('trainPassenger'), false)
     textInputField_TrainPassenger:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_trainPassenger", text)
     end)
@@ -122,7 +122,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_WaterPassenger = api.gui.comp.TextView.new("Water Passenger: ")
     local textInputField_WaterPassenger = api.gui.comp.TextInputField.new("Water Passenger")
-    textInputField_WaterPassenger:setText(state.linanamerSettings.transportType.waterPassenger, false)
+    textInputField_WaterPassenger:setText(State.getTransportType('waterPassenger'), false)
     textInputField_WaterPassenger:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_waterPassenger", text)
     end)
@@ -131,7 +131,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_AirPassenger = api.gui.comp.TextView.new("Air Passenger: ")
     local textInputField_AirPassenger = api.gui.comp.TextInputField.new("Air Passenger")
-    textInputField_AirPassenger:setText(state.linanamerSettings.transportType.airPassenger, false)
+    textInputField_AirPassenger:setText(State.getTransportType('waterPassenger'), false)
     textInputField_AirPassenger:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_airPassenger", text)
     end)
@@ -140,7 +140,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_RoadCargo = api.gui.comp.TextView.new("Road Cargo: ")
     local textInputField_RoadCargo = api.gui.comp.TextInputField.new("Road Cargo")
-    textInputField_RoadCargo:setText(state.linanamerSettings.transportType.roadCargo, false)
+    textInputField_RoadCargo:setText(State.getTransportType('roadCargo'), false)
     textInputField_RoadCargo:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_roadCargo", text)
     end)
@@ -149,7 +149,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_TrainCargo = api.gui.comp.TextView.new("Train Cargo: ")
     local textInputField_TrainCargo = api.gui.comp.TextInputField.new("Train Cargo")
-    textInputField_TrainCargo:setText(state.linanamerSettings.transportType.trainCargo, false)
+    textInputField_TrainCargo:setText(State.getTransportType('trainCargo'), false)
     textInputField_TrainCargo:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_trainCargo", text)
     end)
@@ -158,7 +158,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_WaterCargo = api.gui.comp.TextView.new("Water Cargo: ")
     local textInputField_WaterCargo = api.gui.comp.TextInputField.new("Water Cargo")
-    textInputField_WaterCargo:setText(state.linanamerSettings.transportType.waterCargo, false)
+    textInputField_WaterCargo:setText(State.getTransportType('waterCargo'), false)
     textInputField_WaterCargo:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_waterCargo", text)
     end)
@@ -167,7 +167,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_AirCargo = api.gui.comp.TextView.new("Air Cargo: ")
     local textInputField_AirCargo = api.gui.comp.TextInputField.new("Air Cargo")
-    textInputField_AirCargo:setText(state.linanamerSettings.transportType.airCargo, false)
+    textInputField_AirCargo:setText(State.getTransportType('airCargo'), false)
     textInputField_AirCargo:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_airCargo", text)
     end)
@@ -176,7 +176,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_Unknown = api.gui.comp.TextView.new("Unknown: ")
     local textInputField_Unknown = api.gui.comp.TextInputField.new("Unknown")
-    textInputField_Unknown:setText(state.linanamerSettings.transportType.unknown, false)
+    textInputField_Unknown:setText(State.getTransportType('unknown'), false)
     textInputField_Unknown:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "transportType_unknown", text)
     end)
@@ -198,7 +198,7 @@ function GUIHelper.gui_initSettingsWindow()
     -- Settings for the line types, like local line, intercity line, etc.
     local description_LocalLine = api.gui.comp.TextView.new("Local Line: ")
     local textInputField_LocalLine = api.gui.comp.TextInputField.new("Local Line")
-    textInputField_LocalLine:setText(state.linanamerSettings.lineType.localLineAddon, false)
+    textInputField_LocalLine:setText(State.getLineType('localLineAddon'), false)
     textInputField_LocalLine:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "lineType_localLineAddon", text)
     end)
@@ -207,7 +207,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_IntercityLine = api.gui.comp.TextView.new("Intercity Line: ")
     local textInputField_IntercityLine = api.gui.comp.TextInputField.new("Intercity Line")
-    textInputField_IntercityLine:setText(state.linanamerSettings.lineType.intercityLineAddon, false)
+    textInputField_IntercityLine:setText(State.getLineType('intercityLineAddon'), false)
     textInputField_IntercityLine:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "lineType_intercityLineAddon", text)
     end)
@@ -216,7 +216,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_RegionalLine = api.gui.comp.TextView.new("Regional Line: ")
     local textInputField_RegionalLine = api.gui.comp.TextInputField.new("Regional Line")
-    textInputField_RegionalLine:setText(state.linanamerSettings.lineType.regionalLineAddon, false)
+    textInputField_RegionalLine:setText(State.getLineType('regionalLineAddon'), false)
     textInputField_RegionalLine:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "lineType_regionalLineAddon", text)
     end)
@@ -241,7 +241,7 @@ function GUIHelper.gui_initSettingsWindow()
     combobox_CargoTypeWrapper:addItem("Paranthesis")
     combobox_CargoTypeWrapper:addItem("Square Bracket")
     combobox_CargoTypeWrapper:addItem("None")
-    combobox_CargoTypeWrapper:setSelected(state.linanamerSettings.cargoType.wrapper, false)
+    combobox_CargoTypeWrapper:setSelected(State.getCargoTypeWrapper(), false)
     combobox_CargoTypeWrapper:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_wrapper", index)
     end)
@@ -250,7 +250,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local description_CargoTypeSeparator = api.gui.comp.TextView.new("Separator: ")
     local textInputField_CargoTypeSeparator = api.gui.comp.TextInputField.new("Cargo Type Separator")
-    textInputField_CargoTypeSeparator:setText(state.linanamerSettings.cargoType.separator, false)
+    textInputField_CargoTypeSeparator:setText(State.getCargoTypeSeparator(), false)
     textInputField_CargoTypeSeparator:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_separator", text)
     end)
@@ -262,7 +262,7 @@ function GUIHelper.gui_initSettingsWindow()
     combobox_CargoTypeShowType:addItem("Full")
     combobox_CargoTypeShowType:addItem("Short")
     combobox_CargoTypeShowType:addItem("None")
-    combobox_CargoTypeShowType:setSelected(state.linanamerSettings.cargoType.showType, false)
+    combobox_CargoTypeShowType:setSelected(State.getCargoTypeShowType(), false)
     combobox_CargoTypeShowType:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_showType", index)
     end)
@@ -291,6 +291,19 @@ function GUIHelper.gui_initSettingsWindow()
     debugWrapper:setLayout(debugLayout)
     tabWidget:addTab(api.gui.comp.TextView.new("Debug"), debugWrapper)
 
+    local combobox_LogLevel = api.gui.comp.ComboBox.new()
+    combobox_LogLevel:addItem("TRACE")
+    combobox_LogLevel:addItem("DEBUG")
+    combobox_LogLevel:addItem("INFO")
+    combobox_LogLevel:addItem("WARN")
+    combobox_LogLevel:addItem("ERROR")
+    combobox_LogLevel:setSelected(log.getLevel() - 1, false)
+    combobox_LogLevel:onIndexChanged(function(index)
+        ALNHelper.sendScriptCommand("settings_gui", "debug_logLevel", index + 1)
+    end)
+    debugLayout:addItem(combobox_LogLevel)
+
+
     -- WINDOW CREATION
     gui_settingsWindow = api.gui.comp.Window.new("Auto Line Namer Settings", tabWidget)
     tabWidget:setCurrentTab(0, false)
@@ -315,65 +328,73 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
     end
 
     if name == "linemanager_enabled" then
-        state.linanamerSettings.enabled = param
-        log.info("Auto Line Namer enabled: " .. tostring(param))
+        log.debug("GUI received enabled change: " .. tostring(param))
+        State.setEnabled(param)
+        -- Verify state change
+        local currentState = State.getEnabled()
+        if currentState ~= param then
+            log.error("State change failed! Expected: " .. tostring(param) .. " Got: " .. tostring(currentState))
+        end
+        log.info("Auto Line Namer enabled: " .. tostring(State.getEnabled()))
     elseif name == "tagPrefix" then
-        state.linanamerSettings.tagPrefix = param
+        State.setTagPrefix(param)
         log.info("Tag prefix set to: " .. param)
     elseif name == "activeConvention" then
-        state.linanamerSettings.activeConvention = param
+        State.setActiveConvention(param)
         log.info("Active convention set to: " .. param)
     elseif name == "linemanager_reset" then
-        state.linanamerSettings = state.resetSettings()
+        State.resetSettings()
         log.info("Settings reset to default.")
     elseif name == "transportType_roadPassenger" then
-        state.linanamerSettings.transportType.roadPassenger = param
+        State.setTransportType('roadPassenger', param)
         log.info("Road Passenger naming set to: " .. param)
     elseif name == "transportType_roadCargo" then
-        state.linanamerSettings.transportType.roadCargo = param
+        State.setTransportType('roadCargo', param)
         log.info("Road Cargo naming set to: " .. param)
     elseif name == "transportType_tramPassenger" then
-        state.linanamerSettings.transportType.tramPassenger = param
+        State.setTransportType('tramPassenger', param)
         log.info("Tram Passenger naming set to: " .. param)
     elseif name == "transportType_trainPassenger" then
-        state.linanamerSettings.transportType.trainPassenger = param
+        State.setTransportType('trainPassenger', param)
         log.info("Train Passenger naming set to: " .. param)
     elseif name == "transportType_trainCargo" then
-        state.linanamerSettings.transportType.trainCargo = param
+        State.setTransportType('trainCargo', param)
         log.info("Train Cargo naming set to: " .. param)
     elseif name == "transportType_waterPassenger" then
-        state.linanamerSettings.transportType.waterPassenger = param
+        State.setTransportType('waterPassenger', param)
         log.info("Water Passenger naming set to: " .. param)
     elseif name == "transportType_waterCargo" then
-        state.linanamerSettings.transportType.waterCargo = param
+        State.setTransportType('waterCargo', param)
         log.info("Water Cargo naming set to: " .. param)
     elseif name == "transportType_airPassenger" then
-        state.linanamerSettings.transportType.airPassenger = param
+        State.setTransportType('airPassenger', param)
         log.info("Air Passenger naming set to: " .. param)
     elseif name == "transportType_airCargo" then
-        state.linanamerSettings.transportType.airCargo = param
+        State.setTransportType('airCargo', param)
         log.info("Air Cargo naming set to: " .. param)
     elseif name == "transportType_unknown" then
-        state.linanamerSettings.transportType.unknown = param
+        State.setTransportType('unknown', param)
         log.info("Unknown naming set to: " .. param)
     elseif name == "lineType_localLineAddon" then
-        state.linanamerSettings.lineType.localLineAddon = param
+        State.setLineType('localLineAddon', param)
         log.info("Local Line naming set to: " .. param)
     elseif name == "lineType_intercityLineAddon" then
-        state.linanamerSettings.lineType.intercityLineAddon = param
+        State.setLineType('intercityLineAddon', param)
         log.info("Intercity Line naming set to: " .. param)
     elseif name == "lineType_regionalLineAddon" then
-        state.linanamerSettings.lineType.regionalLineAddon = param
+        State.setLineType('regionalLineAddon', param)
         log.info("Regional Line naming set to: " .. param)
     elseif name == "cargoType_wrapper" then
-        state.linanamerSettings.cargoType.wrapper = param
+        State.setCargoTypeWrapper(param)
         log.info("Cargo Type wrapper set to: " .. param)
     elseif name == "cargoType_separator" then
-        state.linanamerSettings.cargoType.separator = param
+        State.setCargoTypeSeparator(param)
         log.info("Cargo Type separator set to: " .. param)
     elseif name == "cargoType_showType" then
-        state.linanamerSettings.cargoType.showType = param
+        State.setCargoTypeShowType(param)
         log.info("Cargo Type show type set to: " .. param)
+    elseif name == "debug_logLevel" then
+        log.setLevel(param)
     end
 end
 

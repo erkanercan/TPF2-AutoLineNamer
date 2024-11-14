@@ -1,4 +1,4 @@
-local state = require("abajuradam/state")
+local State = require 'abajuradam/state'
 
 --- Helper functions for the Auto Line Namer mod.
 local ALNHelper = {}
@@ -115,13 +115,10 @@ local function getCargoTypeStringFromConvention(cargoTypeName)
     -- This function will prepare the cargo type string according to the convention.
     -- We can get the convention info from the state.
     -- First get the current settings from the state.
-    local settings = state.getSettings()
     local cargoTypeString = ""
-    -- Get the cargo type settings from the settings.
-    local cargoTypeSettings = settings.linanamerSettings.cargoType
     -- Get the show type from the settings. Show type can be full, short, or none.
-    --- @type "full"|"short"|"none"
-    local showType = cargoTypeSettings.showType
+    --- @type 0|1|2
+    local showType = State.getCargoTypeShowType()
     -- If show type is none then return empty string.
     if showType == 2 then
         cargoTypeString = ""
@@ -150,7 +147,6 @@ end
 --- @return string cargoTypeString The cargo type string.
 local function buildCargoTypeString(lineData)
     local cargoTypeString = ""
-    local settings = state.getSettings()
     local cargoTypes = {}
     for _, vehicle in ipairs(lineData.vehicles) do
         for _, cargoName in ipairs(vehicle.cargoNames) do
@@ -162,7 +158,7 @@ local function buildCargoTypeString(lineData)
         return ""
     end
 
-    local cargoTypeSeperator = settings.linanamerSettings.cargoType.separator
+    local cargoTypeSeperator = State.getCargoTypeSeparator()
 
     for i, cargoType in ipairs(cargoTypes) do
         cargoTypeString = cargoTypeString .. getCargoTypeStringFromConvention(cargoType)
@@ -171,8 +167,8 @@ local function buildCargoTypeString(lineData)
         end
     end
 
-    --- @type "paranthesis"|"squareBracket"|"none"
-    local cargoTypeWrapper = settings.linanamerSettings.cargoType.wrapper
+    --- @type 0|1|2
+    local cargoTypeWrapper = State.getCargoTypeWrapper()
     if cargoTypeWrapper == 0 then
         cargoTypeString = "(" .. cargoTypeString .. ")"
     elseif cargoTypeWrapper == 1 then
@@ -189,7 +185,6 @@ local function buildTransportTypeString(lineData)
     if not lineData or not lineData.vehicleInfo then
         return ""
     end
-    local settings = state.getSettings()
     local transportModes = lineData.vehicleInfo.transportModes or {}
     local vehicles = lineData.vehicles
     local cargoType = ""
@@ -201,7 +196,7 @@ local function buildTransportTypeString(lineData)
             cargoType = "P"
         end
     end
-    local transportTypeNamingSettings = settings.linanamerSettings.transportType
+    local transportTypeNamingSettings = State.getTransportTypeSettings()
     if transportModes[api.type.enum.TransportMode.TRUCK + 1] == 1 then
         transportTypeString = transportTypeNamingSettings.roadCargo
     elseif transportModes[api.type.enum.TransportMode.BUS + 1] == 1 then
@@ -243,8 +238,7 @@ local function buildLineTypeString(lineData)
     if not lineData or not lineData.towns then
         return ""
     end
-    local settings = state.getSettings()
-    local lineTypeNamingSettings = settings.linanamerSettings.lineType
+    local lineTypeNamingSettings = State.getLineTypeSettings()
     if #lineData.towns == 1 then
         lineTypeString = lineTypeNamingSettings.localLineAddon
     elseif #lineData.towns == 2 then
@@ -269,7 +263,7 @@ function ALNHelper.generateLineName(lineId)
         return ""
     end
     local lineName = ""
-    local convention = state.linanamerSettings.activeConvention
+    local convention = State.getActiveConvention()
     -- Convention can include 5 different values: {transportType}, {townNames}, {lineType}, {cargoTypes}, {lineNumber}
     -- We need to replace these values with the actual values.
     -- First we need to get the transport type string.
