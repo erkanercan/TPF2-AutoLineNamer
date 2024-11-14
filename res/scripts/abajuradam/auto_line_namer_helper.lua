@@ -20,13 +20,15 @@ end
 --- @return table towns A table of town names.
 local function getAllTownInfosFromLine(lineComp)
     local towns = {}
+    local allTowns = {}
     for _, stop in ipairs(lineComp.stops) do
         local stationGroup = api.engine.getComponent(stop.stationGroup, api.type.ComponentType.STATION_GROUP)
         if stationGroup and stationGroup.stations and stationGroup.stations[1] then
             local townId = api.engine.system.stationSystem.getTown(stationGroup.stations[1])
-            if townId then
+            if townId and not allTowns[townId] then
                 local townName = api.engine.getComponent(townId, api.type.ComponentType.NAME).name
                 table.insert(towns, townName)
+                allTowns[townId] = true
             end
         end
     end
@@ -263,7 +265,7 @@ function ALNHelper.generateLineName(lineId)
     local firstTownShort = getTownNameInitials(lineData.towns[1])
     local lastTownShort = getTownNameInitials(lineData.towns[#lineData.towns])
     local townNamesString = firstTownShort
-    if #lineData.towns > 1 then
+    if #lineData.towns > 1 and firstTownShort ~= lastTownShort then
         townNamesString = townNamesString .. " - " .. lastTownShort
     end
     -- Replace the {townNames} with the actual town names string.

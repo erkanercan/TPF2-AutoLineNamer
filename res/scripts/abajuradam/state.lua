@@ -24,7 +24,7 @@ function State.init()
     if not State.instance then
         State.instance = {
             autoLineNamerSettings = {
-                activeConvention = "{transportType} - {townNames} - {lineType} - {lineNumber} - {cargoTypes}",
+                activeConvention = "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}",
                 tagPrefix = "[NoAuto]",
                 namedLines = {},
                 prefix = "^",
@@ -171,7 +171,7 @@ end
 -- Reset function
 function State.resetSettings()
     State.autoLineNamerSettings = {
-        activeConvention = "{transportType} - {townNames} - {lineType} - {lineNumber} - {cargoTypes}",
+        activeConvention = "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}",
         tagPrefix = "[NoAuto]",
         namedLines = {},
         prefix = "^",
