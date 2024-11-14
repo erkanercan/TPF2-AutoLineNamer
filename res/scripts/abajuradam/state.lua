@@ -29,6 +29,10 @@ function State.init()
                 namedLines = {},
                 prefix = "^",
                 enabled = true,
+                autoUpdate = {
+                    enabled = true,
+                    interval = 5,
+                },
                 transportType = {
                     roadPassenger = "RP",  -- road passenger
                     roadCargo = "RC",      -- road cargo
@@ -65,6 +69,16 @@ end
 function State.getSettings()
     local instance = State.instance or State.init()
     return instance.autoLineNamerSettings
+end
+
+function State.getAutoUpdateEnabled()
+    local instance = State.instance or State.init()
+    return instance.autoLineNamerSettings.autoUpdate.enabled
+end
+
+function State.getAutoUpdateInterval()
+    local instance = State.instance or State.init()
+    return instance.autoLineNamerSettings.autoUpdate.interval
 end
 
 function State.getEnabled()
@@ -121,6 +135,24 @@ function State.getCargoTypeShowType()
 end
 
 -- General Settings Setters
+function State.setAutoUpdateEnabled(enabled)
+    if type(enabled) ~= "boolean" then
+        log.error("Invalid enabled value: " .. tostring(enabled))
+        return
+    end
+    local instance = State.instance or State.init() -- Get single instance
+    instance.autoLineNamerSettings.autoUpdate.enabled = enabled
+end
+
+function State.setAutoUpdateInterval(interval)
+    if type(interval) ~= "number" then
+        log.error("Invalid interval value: " .. tostring(interval))
+        return
+    end
+    local instance = State.instance or State.init() -- Get single instance
+    instance.autoLineNamerSettings.autoUpdate.interval = interval
+end
+
 function State.setEnabled(enabled)
     if type(enabled) ~= "boolean" then
         log.error("Invalid enabled value: " .. tostring(enabled))
