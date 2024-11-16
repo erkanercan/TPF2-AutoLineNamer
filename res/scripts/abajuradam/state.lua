@@ -32,16 +32,16 @@ function State.init()
                     interval = 1,
                 },
                 transportType = {
-                    roadPassenger = "RP",  -- road passenger
-                    roadCargo = "RC",      -- road cargo
-                    tramPassenger = "TP",  -- tram passenger
-                    trainPassenger = "TP", -- train passenger
-                    trainCargo = "TC",     -- train cargo
-                    waterPassenger = "WP", -- water passenger
-                    waterCargo = "WC",     -- water cargo
-                    airPassenger = "AP",   -- air passenger
-                    airCargo = "AC",       -- air cargo
-                    unknown = "UNK",       -- unknown
+                    roadPassenger = "Bus",  -- road passenger
+                    roadCargo = "RC",       -- road cargo
+                    tramPassenger = "Tram", -- tram passenger
+                    trainPassenger = "TP",  -- train passenger
+                    trainCargo = "TC",      -- train cargo
+                    waterPassenger = "WP",  -- water passenger
+                    waterCargo = "WC",      -- water cargo
+                    airPassenger = "AP",    -- air passenger
+                    airCargo = "AC",        -- air cargo
+                    unknown = "UNK",        -- unknown
                 },
                 lineType = {
                     localLineAddon = "LO",     -- local line
@@ -227,9 +227,9 @@ function State.resetSettings()
             interval = 1,
         },
         transportType = {
-            roadPassenger = "RP",
+            roadPassenger = "Bus",
             roadCargo = "RC",
-            tramPassenger = "TP",
+            tramPassenger = "Tram",
             trainPassenger = "TP",
             trainCargo = "TC",
             waterPassenger = "WP",
