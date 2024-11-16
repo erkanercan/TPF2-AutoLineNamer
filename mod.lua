@@ -2,9 +2,8 @@
 function data()
     return {
         info = {
-            name = "Auto Line Namer 1.0.0",
-            description =
-            "Automatically names new lines based on customizable naming conventions. Allows tagging lines to prevent auto-renaming.",
+            name = _("mod_name"),
+            description = _("mod_description"),
             authors = {
                 {
                     name = "erkanercan",
@@ -12,6 +11,8 @@ function data()
                 },
             },
             tags = { "Script Mod", "Misc" },
+            severityAdd = "NONE",
+            severityRemove = "NONE",
         },
     }
 end
