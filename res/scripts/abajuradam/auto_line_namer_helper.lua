@@ -93,7 +93,7 @@ end
 
 --- Retrieves the data of a line.
 --- @param lineId number The ID of the line to retrieve data from.
---- @return table lineData The data of the line.
+--- @return table | nil lineData The data of the line.
 local function getLineData(lineId)
     local lineData = {
         id = lineId,
@@ -278,7 +278,7 @@ end
 --- @return string lineName The generated line name.
 function ALNHelper.generateLineName(lineId)
     local lineData = getLineData(lineId)
-    if not lineData then
+    if not lineData or lineData == nil then
         return ""
     end
     -- If lineData.towns is empty, return empty string.
