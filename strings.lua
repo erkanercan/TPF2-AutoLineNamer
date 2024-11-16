@@ -6,92 +6,190 @@ function data()
 
             -- Settings Window
             ["gui_settings_title"] = "Auto Line Namer Settings",
-
             -- General Tab
             ["gui_settings_tab_general"] = "General",
-
             ["gui_settings_tab_general_enabling_title"] = "Enabling:",
             ["gui_settings_tab_general_enabling_description"] = "Enable or disable the mod",
-
             ["gui_settings_tab_general_prefix_title"] = "Disable Prefix:",
             ["gui_settings_tab_general_prefix_description"] = "Disable Prefix",
-
             ["gui_settings_tab_general_convention_title"] = "Active Convention:",
             ["gui_settings_tab_general_convention_description"] = "Active Convention",
-
             ["gui_settings_tab_general_autoUpdate_title"] = "Auto Update:",
             ["gui_settings_tab_general_autoUpdate_description"] = "Auto Update",
-
             ["gui_settings_tab_general_autoUpdateInterval_title"] = "Auto Update Interval",
             ["gui_settings_tab_general_autoUpdateInterval_description"] = "minutes",
-
             -- Transport Types Tab
             ["gui_settings_tab_transportType"] = "Transport Types",
-
             ["gui_settings_tab_transportType_roadPassenger_title"] = "Road Passenger:",
             ["gui_settings_tab_transportType_roadPassenger_description"] = "Road Passenger",
-
             ["gui_settings_tab_transportType_tramPassenger_title"] = "Tram Passenger:",
             ["gui_settings_tab_transportType_tramPassenger_description"] = "Tram Passenger",
-
             ["gui_settings_tab_transportType_trainPassenger_title"] = "Train Passenger:",
             ["gui_settings_tab_transportType_trainPassenger_description"] = "Train Passenger",
-
             ["gui_settings_tab_transportType_waterPassenger_title"] = "Water Passenger:",
             ["gui_settings_tab_transportType_waterPassenger_description"] = "Water Passenger",
-
             ["gui_settings_tab_transportType_airPassenger_title"] = "Air Passenger:",
             ["gui_settings_tab_transportType_airPassenger_description"] = "Air Passenger",
-
             ["gui_settings_tab_transportType_roadCargo_title"] = "Road Cargo:",
             ["gui_settings_tab_transportType_roadCargo_description"] = "Road Cargo",
-
             ["gui_settings_tab_transportType_trainCargo_title"] = "Train Cargo:",
             ["gui_settings_tab_transportType_trainCargo_description"] = "Train Cargo",
-
             ["gui_settings_tab_transportType_waterCargo_title"] = "Water Cargo:",
             ["gui_settings_tab_transportType_waterCargo_description"] = "Water Cargo",
-
             ["gui_settings_tab_transportType_airCargo_title"] = "Air Cargo:",
             ["gui_settings_tab_transportType_airCargo_description"] = "Air Cargo",
-
             ["gui_settings_tab_transportType_unknown_title"] = "Unknown:",
             ["gui_settings_tab_transportType_unknown_description"] = "Unknown",
-
             -- Line Type Tab
             ["gui_settings_tab_lineType"] = "Line Types",
-
             ["gui_settings_tab_lineType_local_title"] = "Local Line:",
             ["gui_settings_tab_lineType_local_description"] = "Local Line",
-
             ["gui_settings_tab_lineType_intercity_title"] = "Intercity Line:",
             ["gui_settings_tab_lineType_intercity_description"] = "Intercity Line",
-
             ["gui_settings_tab_lineType_regional_title"] = "Regional Line:",
             ["gui_settings_tab_lineType_regional_description"] = "Regional Line",
-
             -- Cargo Type Tab
             ["gui_settings_tab_cargoType"] = "Cargo Types",
-
             ["gui_settings_tab_cargoType_seperator_title"] = "Seperator:",
             ["gui_settings_tab_cargoType_seperator_description"] = "Cargo Type Separator",
-
             ["gui_settings_tab_cargoType_showType_title"] = "Cargo Name Format:",
             ["gui_settings_tab_cargoType_showType_item_full"] = "Full Name",
             ["gui_settings_tab_cargoType_showType_item_short"] = "Short (3-letter)",
-
             -- Town Name Tab
             ["gui_settings_tab_townName"] = "Town Names",
-
             ["gui_settings_tab_townName_showType_title"] = "Town Name Format:",
             ["gui_settings_tab_townName_showType_item_full"] = "Full Name",
             ["gui_settings_tab_townName_showType_item_short"] = "Short (3-letter)",
-
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Debug",
-
             ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
         },
-
+        de = {
+            ["mod_name"] = "Auto Line Namer",
+            ["mod_description"] = "Benennt neue Linien automatisch nach anpassbaren Namenskonventionen",
+            -- Settings Window
+            ["gui_settings_title"] = "Auto Line Namer Einstellungen",
+            -- General Tab
+            ["gui_settings_tab_general"] = "Allgemein",
+            ["gui_settings_tab_general_enabling_title"] = "Aktivierung:",
+            ["gui_settings_tab_general_enabling_description"] = "Aktivieren oder deaktivieren Sie das Modul",
+            ["gui_settings_tab_general_prefix_title"] = "Präfix deaktivieren:",
+            ["gui_settings_tab_general_prefix_description"] = "Präfix deaktivieren",
+            ["gui_settings_tab_general_convention_title"] = "Aktive Konvention:",
+            ["gui_settings_tab_general_convention_description"] = "Aktive Konvention",
+            ["gui_settings_tab_general_autoUpdate_title"] = "Automatisches Update:",
+            ["gui_settings_tab_general_autoUpdate_description"] = "Automatisches Update",
+            ["gui_settings_tab_general_autoUpdateInterval_title"] = "Automatisches Update Intervall",
+            ["gui_settings_tab_general_autoUpdateInterval_description"] = "Minuten",
+            -- Transport Types Tab
+            ["gui_settings_tab_transportType"] = "Transporttypen",
+            ["gui_settings_tab_transportType_roadPassenger_title"] = "Straßenpersonenverkehr:",
+            ["gui_settings_tab_transportType_roadPassenger_description"] = "Straßenpersonenverkehr",
+            ["gui_settings_tab_transportType_tramPassenger_title"] = "Straßenbahn:",
+            ["gui_settings_tab_transportType_tramPassenger_description"] = "Straßenbahn",
+            ["gui_settings_tab_transportType_trainPassenger_title"] = "Personenzug:",
+            ["gui_settings_tab_transportType_trainPassenger_description"] = "Personenzug",
+            ["gui_settings_tab_transportType_waterPassenger_title"] = "Wasserpersonenverkehr:",
+            ["gui_settings_tab_transportType_waterPassenger_description"] = "Wasserpersonenverkehr",
+            ["gui_settings_tab_transportType_airPassenger_title"] = "Luftpersonenverkehr:",
+            ["gui_settings_tab_transportType_airPassenger_description"] = "Luftpersonenverkehr",
+            ["gui_settings_tab_transportType_roadCargo_title"] = "Straßengüterverkehr:",
+            ["gui_settings_tab_transportType_roadCargo_description"] = "Straßengüterverkehr",
+            ["gui_settings_tab_transportType_trainCargo_title"] = "Güterzug:",
+            ["gui_settings_tab_transportType_trainCargo_description"] = "Güterzug",
+            ["gui_settings_tab_transportType_waterCargo_title"] = "Wassergüterverkehr:",
+            ["gui_settings_tab_transportType_waterCargo_description"] = "Wassergüterverkehr",
+            ["gui_settings_tab_transportType_airCargo_title"] = "Luftgüterverkehr:",
+            ["gui_settings_tab_transportType_airCargo_description"] = "Luftgüterverkehr",
+            ["gui_settings_tab_transportType_unknown_title"] = "Unbekannt:",
+            ["gui_settings_tab_transportType_unknown_description"] = "Unbekannt",
+            -- Line Type Tab
+            ["gui_settings_tab_lineType"] = "Linientypen",
+            ["gui_settings_tab_lineType_local_title"] = "Lokale Linie:",
+            ["gui_settings_tab_lineType_local_description"] = "Lokale Linie",
+            ["gui_settings_tab_lineType_intercity_title"] = "Fernverkehrslinie:",
+            ["gui_settings_tab_lineType_intercity_description"] = "Fernverkehrslinie",
+            ["gui_settings_tab_lineType_regional_title"] = "Regionallinie:",
+            ["gui_settings_tab_lineType_regional_description"] = "Regionallinie",
+            -- Cargo Type Tab
+            ["gui_settings_tab_cargoType"] = "Frachttypen",
+            ["gui_settings_tab_cargoType_seperator_title"] = "Trennzeichen:",
+            ["gui_settings_tab_cargoType_seperator_description"] = "Frachttyp-Trennzeichen",
+            ["gui_settings_tab_cargoType_showType_title"] = "Frachtname Format:",
+            ["gui_settings_tab_cargoType_showType_item_full"] = "Voller Name",
+            ["gui_settings_tab_cargoType_showType_item_short"] = "Kurz (3 Buchstaben)",
+            -- Town Name Tab
+            ["gui_settings_tab_townName"] = "Städtenamen",
+            ["gui_settings_tab_townName_showType_title"] = "Städtenamen Format:",
+            ["gui_settings_tab_townName_showType_item_full"] = "Voller Name",
+            ["gui_settings_tab_townName_showType_item_short"] = "Kurz (3 Buchstaben)",
+            -- Debug Tab
+            ["gui_settings_tab_debug"] = "Debug",
+            ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
+        },
+        tr = {
+            ["mod_name"] = "Otomatik Hat Adlandırıcı",
+            ["mod_description"] =
+            "Özelleştirilebilir adlandırma kurallarına göre yeni hatları otomatik olarak adlandırır",
+            -- Settings Window
+            ["gui_settings_title"] = "Otomatik Hat Adlandırıcı Ayarları",
+            -- General Tab
+            ["gui_settings_tab_general"] = "Genel",
+            ["gui_settings_tab_general_enabling_title"] = "Etkinleştirme:",
+            ["gui_settings_tab_general_enabling_description"] = "Modülü etkinleştir veya devre dışı bırak",
+            ["gui_settings_tab_general_prefix_title"] = "Ön Ek Devre Dışı Bırak:",
+            ["gui_settings_tab_general_prefix_description"] = "Ön Ek Devre Dışı Bırak",
+            ["gui_settings_tab_general_convention_title"] = "Etkin Kurallar:",
+            ["gui_settings_tab_general_convention_description"] = "Etkin Kurallar",
+            ["gui_settings_tab_general_autoUpdate_title"] = "Otomatik Güncelleme:",
+            ["gui_settings_tab_general_autoUpdate_description"] = "Otomatik Güncelleme",
+            ["gui_settings_tab_general_autoUpdateInterval_title"] = "Otomatik Güncelleme Aralığı",
+            ["gui_settings_tab_general_autoUpdateInterval_description"] = "dakika",
+            -- Transport Types Tab
+            ["gui_settings_tab_transportType"] = "Taşıma Türleri",
+            ["gui_settings_tab_transportType_roadPassenger_title"] = "Kara Yolcu:",
+            ["gui_settings_tab_transportType_roadPassenger_description"] = "Kara Yolcu",
+            ["gui_settings_tab_transportType_tramPassenger_title"] = "Tramvay Yolcu:",
+            ["gui_settings_tab_transportType_tramPassenger_description"] = "Tramvay Yolcu",
+            ["gui_settings_tab_transportType_trainPassenger_title"] = "Tren Yolcu:",
+            ["gui_settings_tab_transportType_trainPassenger_description"] = "Tren Yolcu",
+            ["gui_settings_tab_transportType_waterPassenger_title"] = "Su Yolcu:",
+            ["gui_settings_tab_transportType_waterPassenger_description"] = "Su Yolcu",
+            ["gui_settings_tab_transportType_airPassenger_title"] = "Hava Yolcu:",
+            ["gui_settings_tab_transportType_airPassenger_description"] = "Hava Yolcu",
+            ["gui_settings_tab_transportType_roadCargo_title"] = "Kara Kargo:",
+            ["gui_settings_tab_transportType_roadCargo_description"] = "Kara Kargo",
+            ["gui_settings_tab_transportType_trainCargo_title"] = "Tren Kargo:",
+            ["gui_settings_tab_transportType_trainCargo_description"] = "Tren Kargo",
+            ["gui_settings_tab_transportType_waterCargo_title"] = "Su Kargo:",
+            ["gui_settings_tab_transportType_waterCargo_description"] = "Su Kargo",
+            ["gui_settings_tab_transportType_airCargo_title"] = "Hava Kargo:",
+            ["gui_settings_tab_transportType_airCargo_description"] = "Hava Kargo",
+            ["gui_settings_tab_transportType_unknown_title"] = "Bilinmeyen:",
+            ["gui_settings_tab_transportType_unknown_description"] = "Bilinmeyen",
+            -- Line Type Tab
+            ["gui_settings_tab_lineType"] = "Hat Türleri",
+            ["gui_settings_tab_lineType_local_title"] = "Yerel Hat:",
+            ["gui_settings_tab_lineType_local_description"] = "Yerel Hat",
+            ["gui_settings_tab_lineType_intercity_title"] = "Şehirlerarası Hat:",
+            ["gui_settings_tab_lineType_intercity_description"] = "Şehirlerarası Hat",
+            ["gui_settings_tab_lineType_regional_title"] = "Bölgesel Hat:",
+            ["gui_settings_tab_lineType_regional_description"] = "Bölgesel Hat",
+            -- Cargo Type Tab
+            ["gui_settings_tab_cargoType"] = "Kargo Türleri",
+            ["gui_settings_tab_cargoType_seperator_title"] = "Ayırıcı:",
+            ["gui_settings_tab_cargoType_seperator_description"] = "Kargo Türü Ayırıcı",
+            ["gui_settings_tab_cargoType_showType_title"] = "Kargo Adı Biçimi:",
+            ["gui_settings_tab_cargoType_showType_item_full"] = "Tam Ad",
+            ["gui_settings_tab_cargoType_showType_item_short"] = "Kısa (3 harf)",
+            -- Town Name Tab
+            ["gui_settings_tab_townName"] = "Şehir Adları",
+            ["gui_settings_tab_townName_showType_title"] = "Şehir Adı Biçimi:",
+            ["gui_settings_tab_townName_showType_item_full"] = "Tam Ad",
+            ["gui_settings_tab_townName_showType_item_short"] = "Kısa (3 harf)",
+            -- Debug Tab
+            ["gui_settings_tab_debug"] = "Hata Ayıklama",
+            ["gui_settings_tab_debug_logLevel_title"] = "Log Seviyesi:",
+        },
     }
 end
