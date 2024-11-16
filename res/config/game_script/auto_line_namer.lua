@@ -10,7 +10,6 @@ local lastUpdate = 0
 -- Rename lines based on generated name
 local function renameLines()
     local enabledStatus = State.getEnabled()
-    local prefix = State.getTagPrefix()
     if not enabledStatus then
         log.info("Auto Line Namer is disabled")
         return
