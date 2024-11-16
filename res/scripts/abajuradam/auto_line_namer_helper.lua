@@ -253,6 +253,26 @@ local function buildLineTypeString(lineData)
     return lineTypeString
 end
 
+local function buildTownNamesString(lineData)
+    local firstTown = lineData.towns[1]
+    local lastTown = lineData.towns[#lineData.towns]
+    local showType = State.getTownNameShowType()
+
+    local function formatTownName(town)
+        if showType == 0 then -- full
+            return town
+        else                  -- short (3-letter)
+            return getTownNameInitials(town)
+        end
+    end
+
+    local townNamesString = formatTownName(firstTown)
+    if #lineData.towns > 1 and firstTown ~= lastTown then
+        townNamesString = townNamesString .. "-" .. formatTownName(lastTown)
+    end
+    return townNamesString
+end
+
 --- Generates the line name from the line ID.
 --- @param lineId number The ID of the line to generate the name from.
 --- @return string lineName The generated line name.
@@ -274,12 +294,7 @@ function ALNHelper.generateLineName(lineId)
     -- Replace the {transportType} with the actual transport type string.
     convention = string.gsub(convention, "{transportType}", transportTypeString)
     -- Next we need to get the town names string. We only need to include first and last town names.
-    local firstTownShort = getTownNameInitials(lineData.towns[1])
-    local lastTownShort = getTownNameInitials(lineData.towns[#lineData.towns])
-    local townNamesString = firstTownShort
-    if #lineData.towns > 1 and firstTownShort ~= lastTownShort then
-        townNamesString = townNamesString .. "-" .. lastTownShort
-    end
+    local townNamesString = buildTownNamesString(lineData)
     -- Replace the {townNames} with the actual town names string.
     convention = string.gsub(convention, "{townNames}", townNamesString)
     -- Next we need to get the line type string.

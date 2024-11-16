@@ -56,6 +56,13 @@ function State.init()
                     separator = ",", -- separator between cargo types
                     showType = 0,    -- full, short
                 },
+                townName = {
+                    showTypeMap = {
+                        full = 0,
+                        short = 1,
+                    },
+                    showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
+                },
             },
         }
     end
@@ -132,6 +139,11 @@ function State.getCargoTypeShowType()
     return instance.autoLineNamerSettings.cargoType.showType
 end
 
+function State.getTownNameShowType()
+    local instance = State.instance or State.init()
+    return instance.autoLineNamerSettings.townName.showType
+end
+
 -- General Settings Setters
 function State.setAutoUpdateEnabled(enabled)
     if type(enabled) ~= "boolean" then
@@ -198,6 +210,11 @@ function State.setCargoTypeShowType(showType)
     instance.autoLineNamerSettings.cargoType.showType = showType
 end
 
+function State.setTownNameShowType(showType)
+    local instance = State.instance or State.init()
+    instance.autoLineNamerSettings.townName.showType = showType
+end
+
 -- Reset function
 function State.resetSettings()
     State.autoLineNamerSettings = {
@@ -233,6 +250,13 @@ function State.resetSettings()
             },
             separator = ",",
             showType = 0,
+        },
+        townName = {
+            showTypeMap = {
+                full = 0,
+                short = 1,
+            },
+            showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
         },
     }
     return State.autoLineNamerSettings

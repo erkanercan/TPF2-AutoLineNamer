@@ -282,6 +282,23 @@ function GUIHelper.gui_initSettingsWindow()
     townNameSettingsWrapper:setLayout(townNameSettingsLayout)
     tabWidget:addTab(api.gui.comp.TextView.new("Town Names"), townNameSettingsWrapper)
 
+    local townNameLabelLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+    local townNameInputLayout = api.gui.layout.BoxLayout.new("VERTICAL")
+
+    local description_TownNameShowType = api.gui.comp.TextView.new("Town Name Format:")
+    local combobox_TownNameShowType = api.gui.comp.ComboBox.new()
+    combobox_TownNameShowType:addItem("Full Name")
+    combobox_TownNameShowType:addItem("Short (3-letter)")
+    combobox_TownNameShowType:setSelected(State.getTownNameShowType(), false)
+    combobox_TownNameShowType:onIndexChanged(function(index)
+        ALNHelper.sendScriptCommand("settings_gui", "townName_showType", index)
+    end)
+
+    townNameLabelLayout:addItem(description_TownNameShowType)
+    townNameInputLayout:addItem(combobox_TownNameShowType)
+    townNameSettingsLayout:addItem(townNameLabelLayout)
+    townNameSettingsLayout:addItem(townNameInputLayout)
+
     -- DEBUG
     local debugLayout = api.gui.layout.BoxLayout.new("HORIZONTAL")
     local debugWrapper = api.gui.comp.Component.new("debugWrapper")
@@ -401,6 +418,9 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
     elseif name == "cargoType_showType" then
         State.setCargoTypeShowType(param)
         log.debug("Cargo Type show type set to: " .. param)
+    elseif name == "townName_showType" then
+        State.setTownNameShowType(param)
+        log.debug("Town Name show type set to: " .. param)
     elseif name == "debug_logLevel" then
         log.setLevel(param)
     end
