@@ -310,6 +310,16 @@ function GUIHelper.gui_initSettingsWindow()
         ALNHelper.sendScriptCommand("settings_gui", "townName_showType", index)
     end)
 
+    local description_TownNameSeparator = api.gui.comp.TextView.new(_("gui_settings_tab_townName_separator_title"))
+    local textInputField_TownNameSeparator = api.gui.comp.TextInputField.new(_(
+        "gui_settings_tab_townName_separator_description"))
+    textInputField_TownNameSeparator:setText(State.getTownNameSeperator(), false)
+    textInputField_TownNameSeparator:onChange(function(text)
+        ALNHelper.sendScriptCommand("settings_gui", "townName_separator", text)
+    end)
+    townNameLabelLayout:addItem(description_TownNameSeparator)
+    townNameInputLayout:addItem(textInputField_TownNameSeparator)
+
     townNameLabelLayout:addItem(description_TownNameShowType)
     townNameInputLayout:addItem(combobox_TownNameShowType)
     townNameSettingsLayout:addItem(townNameLabelLayout)
@@ -437,6 +447,9 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
     elseif name == "townName_showType" then
         State.setTownNameShowType(param)
         log.debug("Town Name show type set to: " .. param)
+    elseif name == "townName_separator" then
+        State.setTownNameSeparator(param)
+        log.debug("Town Name separator set to: " .. param)
     elseif name == "debug_logLevel" then
         log.setLevel(param)
     end

@@ -60,6 +60,8 @@ function data()
             ["gui_settings_tab_townName_showType_title"] = "Town Name Format:",
             ["gui_settings_tab_townName_showType_item_full"] = "Full Name",
             ["gui_settings_tab_townName_showType_item_short"] = "Short (3-letter)",
+            ["gui_settings_tab_townName_separator_title"] = "Town Separator:",
+            ["gui_settings_tab_townName_separator_description"] = "Town Name Separator",
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
@@ -123,6 +125,8 @@ function data()
             ["gui_settings_tab_townName_showType_title"] = "Städtenamen Format:",
             ["gui_settings_tab_townName_showType_item_full"] = "Voller Name",
             ["gui_settings_tab_townName_showType_item_short"] = "Kurz (3 Buchstaben)",
+            ["gui_settings_tab_townName_separator_title"] = "Stadt Trennzeichen:",
+            ["gui_settings_tab_townName_separator_description"] = "Stadt Trennzeichen",
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
@@ -187,6 +191,8 @@ function data()
             ["gui_settings_tab_townName_showType_title"] = "Şehir Adı Biçimi:",
             ["gui_settings_tab_townName_showType_item_full"] = "Tam Ad",
             ["gui_settings_tab_townName_showType_item_short"] = "Kısa (3 harf)",
+            ["gui_settings_tab_townName_separator_title"] = "Şehir Ayırıcı:",
+            ["gui_settings_tab_townName_separator_description"] = "Şehir Ayırıcı",
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Hata Ayıklama",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Seviyesi:",

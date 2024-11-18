@@ -268,7 +268,7 @@ local function buildTownNamesString(lineData)
 
     local townNamesString = formatTownName(firstTown)
     if #lineData.towns > 1 and firstTown ~= lastTown then
-        townNamesString = townNamesString .. "-" .. formatTownName(lastTown)
+        townNamesString = townNamesString .. State.getTownNameSeperator() .. formatTownName(lastTown)
     end
     return townNamesString
 end
