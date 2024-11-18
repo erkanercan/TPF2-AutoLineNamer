@@ -362,6 +362,14 @@ function GUIHelper.gui_initSettingsWindow()
     debugLayout:addItem(debugLabelLayout)
     debugLayout:addItem(debugInputLayout)
 
+    local button_ResetSettings = api.gui.comp.Button.new(
+        api.gui.comp.TextView.new(_("gui_settings_tab_debug_reset_title")), true)
+    button_ResetSettings:onClick(function()
+        ALNHelper.sendScriptCommand("settings_gui", "debug_reset", "")
+    end)
+
+    debugLayout:addItem(button_ResetSettings)
+
 
     -- WINDOW CREATION
     gui_settingsWindow = api.gui.comp.Window.new(_("gui_settings_title"), tabWidget)
@@ -463,6 +471,9 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
         log.debug("Town Name separator set to: " .. param)
     elseif name == "debug_logLevel" then
         log.setLevel(param)
+    elseif name == "debug_reset" then
+        State.resetSettings()
+        log.debug("Settings reset to default.")
     end
 end
 

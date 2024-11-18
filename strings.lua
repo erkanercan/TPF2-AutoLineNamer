@@ -75,6 +75,7 @@ function data()
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
+            ["gui_settings_tab_debug_reset_title"] = "Reset Settings",
         },
         de = {
             ["mod_description"] = "Benennt neue Linien automatisch basierend auf anpassbaren Benennungskonventionen",
@@ -153,6 +154,7 @@ function data()
             -- Debug Tab
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log-Level:",
+            ["gui_settings_tab_debug_reset_title"] = "Einstellungen zurücksetzen",
         },
         ru = {
             ["mod_description"] = "Автоматически называет новые линии на основе настраиваемых шаблонов",
@@ -230,6 +232,7 @@ function data()
             -- Вкладка Отладка
             ["gui_settings_tab_debug"] = "Отладка",
             ["gui_settings_tab_debug_logLevel_title"] = "Уровень Логов:",
+            ["gui_settings_tab_debug_reset_title"] = "Сбросить Настройки",
         },
         tr = {
             ["mod_description"] =
@@ -307,6 +310,7 @@ function data()
             -- Hata Ayıklama Sekmesi
             ["gui_settings_tab_debug"] = "Hata Ayıklama",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Seviyesi:",
+            ["gui_settings_tab_debug_reset_title"] = "Ayarları Sıfırla",
         }
 
     }

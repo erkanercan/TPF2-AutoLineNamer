@@ -45,7 +45,7 @@ function data()
             if currentTime - lastUpdate >= intervalSeconds then
                 renameLines()
                 lastUpdate = currentTime
-                log.warn(string.format("Auto-renamed lines (interval: %d minutes)", intervalMinutes))
+                log.info(string.format("Auto-renamed lines (interval: %d minutes)", intervalMinutes))
             end
         end,
         handleEvent = function(filename, id, name, param)
