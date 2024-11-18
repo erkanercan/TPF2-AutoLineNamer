@@ -78,6 +78,8 @@ function data()
                                 State.setLineType(subKey, subValue)
                             elseif key == 'cargoType' then
                                 State.setCargoType(subKey, subValue)
+                            elseif key == "townName" then
+                                State.setTownName(subKey, subValue)
                             end
                         end
                     else

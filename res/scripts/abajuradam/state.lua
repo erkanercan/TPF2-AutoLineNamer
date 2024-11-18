@@ -179,11 +179,19 @@ function State.setEnabled(enabled)
 end
 
 function State.setActiveConvention(convention)
+    if type(convention) ~= "string" then
+        log.error("Invalid convention value: " .. tostring(convention))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.activeConvention = convention
 end
 
 function State.setTagPrefix(prefix)
+    if type(prefix) ~= "string" then
+        log.error("Invalid prefix value: " .. tostring(prefix))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.tagPrefix = prefix
 end
@@ -207,21 +215,42 @@ function State.setCargoType(key, value)
 end
 
 function State.setCargoTypeSeparator(separator)
+    if type(separator) ~= "string" then
+        log.error("Invalid separator value: " .. tostring(separator))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.cargoType.separator = separator
 end
 
 function State.setCargoTypeShowType(showType)
+    if type(showType) ~= "number" then
+        log.error("Invalid showType value: " .. tostring(showType))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.cargoType.showType = showType
 end
 
+function State.setTownName(key, value)
+    local instance = State.instance or State.init()
+    instance.autoLineNamerSettings.townName[key] = value
+end
+
 function State.setTownNameShowType(showType)
+    if type(showType) ~= "number" then
+        log.error("Invalid showType value: " .. tostring(showType))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.townName.showType = showType
 end
 
-function State.setTownNameSeperator(seperator)
+function State.setTownNameSeparator(seperator)
+    if type(seperator) ~= "string" then
+        log.error("Invalid seperator value: " .. tostring(seperator))
+        return
+    end
     local instance = State.instance or State.init()
     instance.autoLineNamerSettings.townName.seperator = seperator
 end
