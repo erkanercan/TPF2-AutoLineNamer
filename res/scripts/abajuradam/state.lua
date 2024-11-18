@@ -62,6 +62,7 @@ function State.init()
                         short = 1,
                     },
                     showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
+                    seperator = "-",
                 },
             },
         }
@@ -144,6 +145,11 @@ function State.getTownNameShowType()
     return instance.autoLineNamerSettings.townName.showType
 end
 
+function State.getTownNameSeperator()
+    local instance = State.instance or State.init()
+    return instance.autoLineNamerSettings.townName.seperator
+end
+
 -- General Settings Setters
 function State.setAutoUpdateEnabled(enabled)
     if type(enabled) ~= "boolean" then
@@ -215,6 +221,11 @@ function State.setTownNameShowType(showType)
     instance.autoLineNamerSettings.townName.showType = showType
 end
 
+function State.setTownNameSeperator(seperator)
+    local instance = State.instance or State.init()
+    instance.autoLineNamerSettings.townName.seperator = seperator
+end
+
 -- Reset function
 function State.resetSettings()
     State.autoLineNamerSettings = {
@@ -257,6 +268,7 @@ function State.resetSettings()
                 short = 1,
             },
             showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
+            seperator = "-",
         },
     }
     return State.autoLineNamerSettings
