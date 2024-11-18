@@ -26,6 +26,7 @@ function GUIHelper.gui_initSettingsWindow()
             if gameInfoLayout then
                 local button = api.gui.comp.Button.new(api.gui.comp.TextView.new("[ALN]"), true)
                 button:onClick(gui_LMButtonClick)
+                button:setTooltip(_("gui_settings_tooltip"))
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
                 gameInfoLayout:addItem(button)
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
@@ -50,6 +51,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     -- Toggle for enabling/disabling the Auto Line Namer
     local header_EnableLineManager = api.gui.comp.TextView.new(_("gui_settings_tab_general_enabling_title"))
+    header_EnableLineManager:setTooltip(_("gui_settings_tab_general_enabling_tooltip"))
     local checkBox_enableLineManager = api.gui.comp.CheckBox.new(_("gui_settings_tab_general_enabling_description"))
     checkBox_enableLineManager:setSelected(State.getEnabled(), false)
     checkBox_enableLineManager:onToggle(function(selected)
@@ -60,6 +62,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     -- Prefix for lines that should not be renamed
     local header_TagPrefix = api.gui.comp.TextView.new(_("gui_settings_tab_general_prefix_title"))
+    header_TagPrefix:setTooltip(_("gui_settings_tab_general_prefix_tooltip"))
     local textInputField_tagPrefix = api.gui.comp.TextInputField.new(_("gui_settings_tab_general_prefix_description"))
     textInputField_tagPrefix:setText(State.getTagPrefix(), false)
     textInputField_tagPrefix:onChange(function(text)
@@ -69,6 +72,7 @@ function GUIHelper.gui_initSettingsWindow()
     generalInputLayout:addItem(textInputField_tagPrefix)
 
     local header_ActiveConvention = api.gui.comp.TextView.new(_("gui_settings_tab_general_convention_title"))
+    header_ActiveConvention:setTooltip(_("gui_settings_tab_general_convention_tooltip"))
     local textInputField_activeConvention = api.gui.comp.TextInputField.new(_(
         "gui_settings_tab_general_convention_description"))
     textInputField_activeConvention:setText(State.getActiveConvention(), false)
@@ -80,6 +84,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     local autoUpdate_Layout = api.gui.layout.BoxLayout.new("HORIZONTAL")
     local header_autoUpdate = api.gui.comp.TextView.new(_("gui_settings_tab_general_autoUpdate_title"))
+    header_autoUpdate:setTooltip(_("gui_settings_tab_general_autoUpdate_tooltip"))
     local checkBox_autoUpdate = api.gui.comp.CheckBox.new(_("gui_settings_tab_general_autoUpdate_description"))
     checkBox_autoUpdate:setSelected(State.getAutoUpdateEnabled(), false)
     checkBox_autoUpdate:onToggle(function(selected)
@@ -87,6 +92,7 @@ function GUIHelper.gui_initSettingsWindow()
     end)
     local textInputField_autoUpdateInterval = api.gui.comp.TextInputField.new(_(
         "gui_settings_tab_general_autoUpdateInterval_title"))
+    textInputField_autoUpdateInterval:setTooltip(_("gui_settings_tab_general_autoUpdateInterval_tooltip"))
     textInputField_autoUpdateInterval:setText(tostring(State.getAutoUpdateInterval()), false)
     textInputField_autoUpdateInterval:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "autoUpdateInterval", text)
@@ -226,6 +232,7 @@ function GUIHelper.gui_initSettingsWindow()
 
     -- Settings for the line types, like local line, intercity line, etc.
     local description_LocalLine = api.gui.comp.TextView.new(_("gui_settings_tab_lineType_local_title"))
+    description_LocalLine:setTooltip(_("gui_settings_tab_lineType_local_tooltip"))
     local textInputField_LocalLine = api.gui.comp.TextInputField.new(_("gui_settings_tab_lineType_local_description"))
     textInputField_LocalLine:setText(State.getLineType('localLineAddon'), false)
     textInputField_LocalLine:onChange(function(text)
@@ -235,6 +242,7 @@ function GUIHelper.gui_initSettingsWindow()
     lineTypeInputLayout:addItem(textInputField_LocalLine)
 
     local description_IntercityLine = api.gui.comp.TextView.new(_("gui_settings_tab_lineType_intercity_title"))
+    description_IntercityLine:setTooltip(_("gui_settings_tab_lineType_intercity_tooltip"))
     local textInputField_IntercityLine = api.gui.comp.TextInputField.new(_(
         "gui_settings_tab_lineType_intercity_description"))
     textInputField_IntercityLine:setText(State.getLineType('intercityLineAddon'), false)
@@ -245,6 +253,7 @@ function GUIHelper.gui_initSettingsWindow()
     lineTypeInputLayout:addItem(textInputField_IntercityLine)
 
     local description_RegionalLine = api.gui.comp.TextView.new(_("gui_settings_tab_lineType_regional_title"))
+    description_RegionalLine:setTooltip(_("gui_settings_tab_lineType_regional_tooltip"))
     local textInputField_RegionalLine = api.gui.comp.TextInputField.new(_(
         "gui_settings_tab_lineType_regional_description"))
     textInputField_RegionalLine:setText(State.getLineType('regionalLineAddon'), false)
@@ -267,9 +276,10 @@ function GUIHelper.gui_initSettingsWindow()
     local cargoTypeInputLayout = api.gui.layout.BoxLayout.new("VERTICAL")
 
     -- Settings for the cargo types, like logs, passengers, etc.
-    local description_CargoTypeSeparator = api.gui.comp.TextView.new(_("gui_settings_tab_cargoType_seperator_title"))
+    local description_CargoTypeSeparator = api.gui.comp.TextView.new(_("gui_settings_tab_cargoType_separator_title"))
+    description_CargoTypeSeparator:setTooltip(_("gui_settings_tab_cargoType_separator_tooltip"))
     local textInputField_CargoTypeSeparator = api.gui.comp.TextInputField.new(_(
-        "gui_settings_tab_cargoType_seperator_description"))
+        "gui_settings_tab_cargoType_separator_description"))
     textInputField_CargoTypeSeparator:setText(State.getCargoTypeSeparator(), false)
     textInputField_CargoTypeSeparator:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_separator", text)
@@ -311,9 +321,10 @@ function GUIHelper.gui_initSettingsWindow()
     end)
 
     local description_TownNameSeparator = api.gui.comp.TextView.new(_("gui_settings_tab_townName_separator_title"))
+    description_TownNameSeparator:setTooltip(_("gui_settings_tab_townName_separator_tooltip"))
     local textInputField_TownNameSeparator = api.gui.comp.TextInputField.new(_(
         "gui_settings_tab_townName_separator_description"))
-    textInputField_TownNameSeparator:setText(State.getTownNameSeperator(), false)
+    textInputField_TownNameSeparator:setText(State.getTownNameSeparator(), false)
     textInputField_TownNameSeparator:onChange(function(text)
         ALNHelper.sendScriptCommand("settings_gui", "townName_separator", text)
     end)

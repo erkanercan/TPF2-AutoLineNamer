@@ -62,7 +62,7 @@ function State.init()
                         short = 1,
                     },
                     showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
-                    seperator = "-",
+                    separator = "-",
                 },
             },
         }
@@ -145,9 +145,9 @@ function State.getTownNameShowType()
     return instance.autoLineNamerSettings.townName.showType
 end
 
-function State.getTownNameSeperator()
+function State.getTownNameSeparator()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.townName.seperator
+    return instance.autoLineNamerSettings.townName.separator
 end
 
 -- General Settings Setters
@@ -246,13 +246,13 @@ function State.setTownNameShowType(showType)
     instance.autoLineNamerSettings.townName.showType = showType
 end
 
-function State.setTownNameSeparator(seperator)
-    if type(seperator) ~= "string" then
-        log.error("Invalid seperator value: " .. tostring(seperator))
+function State.setTownNameSeparator(separator)
+    if type(separator) ~= "string" then
+        log.error("Invalid separator value: " .. tostring(separator))
         return
     end
     local instance = State.instance or State.init()
-    instance.autoLineNamerSettings.townName.seperator = seperator
+    instance.autoLineNamerSettings.townName.separator = separator
 end
 
 -- Reset function
@@ -297,7 +297,7 @@ function State.resetSettings()
                 short = 1,
             },
             showType = 1, -- full = 0, short = 1 (3-letter abbreviation)
-            seperator = "-",
+            separator = "-",
         },
     }
     return State.autoLineNamerSettings

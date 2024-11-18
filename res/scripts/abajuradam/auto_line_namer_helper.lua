@@ -168,12 +168,12 @@ local function buildCargoTypeString(lineData)
         return ""
     end
 
-    local cargoTypeSeperator = State.getCargoTypeSeparator()
+    local cargoTypeSeparator = State.getCargoTypeSeparator()
 
     for i, cargoType in ipairs(cargoTypes) do
         cargoTypeString = cargoTypeString .. getCargoTypeStringFromConvention(cargoType)
         if i < #cargoTypes then
-            cargoTypeString = cargoTypeString .. cargoTypeSeperator
+            cargoTypeString = cargoTypeString .. cargoTypeSeparator
         end
     end
 
@@ -268,7 +268,7 @@ local function buildTownNamesString(lineData)
 
     local townNamesString = formatTownName(firstTown)
     if #lineData.towns > 1 and firstTown ~= lastTown then
-        townNamesString = townNamesString .. State.getTownNameSeperator() .. formatTownName(lastTown)
+        townNamesString = townNamesString .. State.getTownNameSeparator() .. formatTownName(lastTown)
     end
     return townNamesString
 end
