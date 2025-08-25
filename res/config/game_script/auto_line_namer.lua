@@ -146,7 +146,7 @@ end
 -- Check if a line name can be updated (default names are considered updatable)
 local function isUpdatableName(name)
     local lowerName = string.lower(name)
-    return name == "" or name:match("^%s*$") or lowerName == "r" or lowerName == "reload" or name:match("^Line %d+$") or
+    return name == "" or name:match("^%s*$") or lowerName == "r" or lowerName == "reload" or name:match("^Line %d+$") or name:match("^Linie %d+$") or name:match("^Línea %d+$") or name:match("^Ligne %d+$") or name:match("^Linea %d+$") or name:match("^Linia %d+$") or  name:match("^Linha %d+$") or name:match("^Lijn %d+$") or
         lowerName:match("^unk")
 end
 
