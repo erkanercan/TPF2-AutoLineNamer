@@ -2,7 +2,7 @@
 function data()
     return {
         info = {
-            name = "Auto Line Namer 1.0.0",
+            name = "Auto Line Namer 0.2.0",
             description = _("mod_description"),
             authors = {
                 {

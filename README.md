@@ -14,7 +14,7 @@ This README covers installation, a quick GUI walkthrough, how conventions work, 
 
 ## Mod info
 
-- Name: Auto Line Namer 1.0.0
+- Name: Auto Line Namer 0.2.0
 - Author: erkanercan
 
 Note: the deploy helper's default target base uses a specific Steam userdata path inside $HOME. The script will remove an existing folder with the same mod name before copying. If your Steam userdata path differs, pass a custom path to `./scripts/deploy_mod.sh` or edit the script.
