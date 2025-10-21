@@ -6,6 +6,7 @@ function data()
             -- Settings Window
             ["gui_settings_title"] = "Auto Line Namer Settings",
             ["gui_settings_tooltip"] = "Open Auto Line Namer Settings",
+            ["gui_settings_button_label"] = "[ALN]",
             -- General Tab
             ["gui_settings_tab_general"] = "General",
             ["gui_settings_tab_general_enabling_title"] = "Enabling:",
@@ -76,6 +77,10 @@ function data()
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Level:",
             ["gui_settings_tab_debug_reset_title"] = "Reset Settings",
+            ["gui_settings_preview_title"] = "Preview",
+            ["gui_settings_preview_tooltip"] = "A live preview of how the current convention will render",
+            ["gui_settings_preview_updates_tooltip"] =
+            "Preview updates live as you change the convention or related settings",
         },
         de = {
             ["mod_description"] = "Benennt neue Linien automatisch basierend auf anpassbaren Benennungskonventionen",
@@ -155,6 +160,10 @@ function data()
             ["gui_settings_tab_debug"] = "Debug",
             ["gui_settings_tab_debug_logLevel_title"] = "Log-Level:",
             ["gui_settings_tab_debug_reset_title"] = "Einstellungen zurücksetzen",
+            ["gui_settings_preview_title"] = "Vorschau",
+            ["gui_settings_preview_tooltip"] = "Eine Live-Vorschau, wie die aktuelle Konvention gerendert wird",
+            ["gui_settings_preview_updates_tooltip"] =
+            "Die Vorschau wird live aktualisiert, wenn Sie die Konvention oder verwandte Einstellungen ändern",
         },
         ru = {
             ["mod_description"] = "Автоматически называет новые линии на основе настраиваемых шаблонов",
@@ -233,6 +242,10 @@ function data()
             ["gui_settings_tab_debug"] = "Отладка",
             ["gui_settings_tab_debug_logLevel_title"] = "Уровень Логов:",
             ["gui_settings_tab_debug_reset_title"] = "Сбросить Настройки",
+            ["gui_settings_preview_title"] = "Предпросмотр",
+            ["gui_settings_preview_tooltip"] = "Живой пример отображения текущего шаблона",
+            ["gui_settings_preview_updates_tooltip"] =
+            "Предпросмотр обновляется в реальном времени при изменении шаблона или сопутствующих настроек",
         },
         tr = {
             ["mod_description"] =
@@ -311,6 +324,10 @@ function data()
             ["gui_settings_tab_debug"] = "Hata Ayıklama",
             ["gui_settings_tab_debug_logLevel_title"] = "Log Seviyesi:",
             ["gui_settings_tab_debug_reset_title"] = "Ayarları Sıfırla",
+            ["gui_settings_preview_title"] = "Önizleme",
+            ["gui_settings_preview_tooltip"] = "Mevcut şablonun nasıl görüneceğinin canlı önizlemesi",
+            ["gui_settings_preview_updates_tooltip"] =
+            "Önizleme, şablonu veya ilgili ayarları değiştirirken canlı olarak güncellenir",
         }
 
     }

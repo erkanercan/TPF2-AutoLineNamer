@@ -4,6 +4,55 @@ local ALNHelper = require 'abajuradam/auto_line_namer_helper'
 local gui_settingsWindow = nil
 local GUIHelper = {}
 
+-- Preview helpers are module-level so they can be invoked both from the
+-- settings window handlers and from GUI event callbacks (which are
+-- processed in `GUIHelper.handleGuiEvents`). This ensures the preview
+-- updates whenever any setting changes, regardless of event direction.
+local previewText = nil
+local function makePreviewFromState(opts)
+    opts = opts or {}
+    local convention = opts.convention or State.getActiveConvention() or ""
+    local transportType = opts.transportType or State.getTransportType('roadPassenger') or
+    State.getTransportType('unknown') or "TP"
+    local townSep = opts.townSep or State.getTownNameSeparator() or "-"
+    local townShow = (opts.townShow ~= nil) and opts.townShow or State.getTownNameShowType()
+    local townNames = "Springfield" .. townSep .. "Shelbyville"
+    if townShow ~= 0 then
+        -- short form: initials (approximation)
+        townNames = "Spr" .. townSep .. "She"
+    end
+    local lineType = opts.lineType or State.getLineType('localLineAddon') or "LO"
+
+    -- Cargo types: respect the show type (full/short)
+    local cargoShow = (opts.cargoShow ~= nil) and opts.cargoShow or State.getCargoTypeShowType()
+    local cargoTypesFull = "Passengers"
+    local cargoTypes = cargoTypesFull
+    if cargoShow == 1 then
+        -- short form: first 3 letters of each word
+        local shortened = ""
+        for word in string.gmatch(cargoTypesFull, "%S+") do
+            shortened = shortened .. string.sub(word, 1, 3)
+        end
+        cargoTypes = shortened
+    end
+
+    local lineNumber = "1"
+
+    local preview = convention
+    preview = string.gsub(preview, "{transportType}", transportType)
+    preview = string.gsub(preview, "{townNames}", townNames)
+    preview = string.gsub(preview, "{lineType}", lineType)
+    preview = string.gsub(preview, "{cargoTypes}", cargoTypes)
+    preview = string.gsub(preview, "{lineNumber}", lineNumber)
+    return preview
+end
+
+local function updatePreview(opts)
+    if previewText then
+        previewText:setText(makePreviewFromState(opts), false)
+    end
+end
+
 local function gui_LMButtonClick()
     if not gui_settingsWindow then
         log.error("Settings window is nil.")
@@ -24,7 +73,7 @@ function GUIHelper.gui_initSettingsWindow()
         if gameInfoLayout then
             gameInfoLayout = gameInfoLayout:getLayout()
             if gameInfoLayout then
-                local button = api.gui.comp.Button.new(api.gui.comp.TextView.new("[ALN]"), true)
+                local button = api.gui.comp.Button.new(api.gui.comp.TextView.new(_("gui_settings_button_label")), true)
                 button:onClick(gui_LMButtonClick)
                 button:setTooltip(_("gui_settings_tooltip"))
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
@@ -49,38 +98,8 @@ function GUIHelper.gui_initSettingsWindow()
     local generalLabelLayout = api.gui.layout.BoxLayout.new("VERTICAL")
     local generalInputLayout = api.gui.layout.BoxLayout.new("VERTICAL")
 
-    -- Preview helper: build a sample line name from current state so users can see
-    -- how the convention will render. Preview updates when relevant settings
-    -- change.
-    local previewText = nil
-    local function makePreviewFromState()
-        local convention = State.getActiveConvention() or ""
-        local transportType = State.getTransportType('roadPassenger') or State.getTransportType('unknown') or "TP"
-        local townSep = State.getTownNameSeparator() or "-"
-        local townShow = State.getTownNameShowType()
-        local townNames = "Springfield" .. townSep .. "Shelbyville"
-        if townShow ~= 0 then
-            -- short form: initials
-            townNames = "Spr" .. townSep .. "She"
-        end
-        local lineType = State.getLineType('localLineAddon') or "LO"
-        local cargoTypes = "Passengers"
-        local lineNumber = "1"
-
-        local preview = convention
-        preview = string.gsub(preview, "{transportType}", transportType)
-        preview = string.gsub(preview, "{townNames}", townNames)
-        preview = string.gsub(preview, "{lineType}", lineType)
-        preview = string.gsub(preview, "{cargoTypes}", cargoTypes)
-        preview = string.gsub(preview, "{lineNumber}", lineNumber)
-        return preview
-    end
-
-    local function updatePreview()
-        if previewText then
-            previewText:setText(makePreviewFromState(), false)
-        end
-    end
+    -- (preview helpers are module-level; they are defined above so GUI
+    -- event callbacks can call updatePreview())
 
     -- Toggle for enabling/disabling the Auto Line Namer
     local header_EnableLineManager = api.gui.comp.TextView.new(_("gui_settings_tab_general_enabling_title"))
@@ -115,6 +134,14 @@ function GUIHelper.gui_initSettingsWindow()
     end)
     generalLabelLayout:addItem(header_ActiveConvention)
     generalInputLayout:addItem(textInputField_activeConvention)
+
+    -- Preview UI: show a live example of the current convention
+    local header_Preview = api.gui.comp.TextView.new(_("gui_settings_preview_title"))
+    header_Preview:setTooltip(_("gui_settings_preview_tooltip"))
+    previewText = api.gui.comp.TextView.new(makePreviewFromState())
+    previewText:setTooltip(_("gui_settings_preview_updates_tooltip"))
+    generalLabelLayout:addItem(header_Preview)
+    generalInputLayout:addItem(previewText)
 
     local autoUpdate_Layout = api.gui.layout.BoxLayout.new("HORIZONTAL")
     local header_autoUpdate = api.gui.comp.TextView.new(_("gui_settings_tab_general_autoUpdate_title"))
@@ -342,7 +369,8 @@ function GUIHelper.gui_initSettingsWindow()
     combobox_CargoTypeShowType:setSelected(State.getCargoTypeShowType(), false)
     combobox_CargoTypeShowType:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "cargoType_showType", index)
-        updatePreview()
+        -- update preview with the new cargo show type immediately
+        updatePreview({ cargoShow = index })
     end)
     cargoTypeLabelLayout:addItem(description_CargoTypeShowType)
     cargoTypeInputLayout:addItem(combobox_CargoTypeShowType)
@@ -367,7 +395,8 @@ function GUIHelper.gui_initSettingsWindow()
     combobox_TownNameShowType:setSelected(State.getTownNameShowType(), false)
     combobox_TownNameShowType:onIndexChanged(function(index)
         ALNHelper.sendScriptCommand("settings_gui", "townName_showType", index)
-        updatePreview()
+        -- update preview using the new town show type immediately
+        updatePreview({ townShow = index })
     end)
 
     local description_TownNameSeparator = api.gui.comp.TextView.new(_("gui_settings_tab_townName_separator_title"))
@@ -427,47 +456,77 @@ function GUIHelper.gui_initSettingsWindow()
         -- General
         if checkBox_enableLineManager then checkBox_enableLineManager:setSelected(State.getEnabled(), false) end
         if textInputField_tagPrefix then textInputField_tagPrefix:setText(State.getTagPrefix(), false) end
-        if textInputField_activeConvention then textInputField_activeConvention:setText(State.getActiveConvention(),
-                false) end
+        if textInputField_activeConvention then
+            textInputField_activeConvention:setText(State.getActiveConvention(),
+                false)
+        end
         if checkBox_autoUpdate then checkBox_autoUpdate:setSelected(State.getAutoUpdateEnabled(), false) end
-        if textInputField_autoUpdateInterval then textInputField_autoUpdateInterval:setText(
-            tostring(State.getAutoUpdateInterval()), false) end
+        if textInputField_autoUpdateInterval then
+            textInputField_autoUpdateInterval:setText(
+                tostring(State.getAutoUpdateInterval()), false)
+        end
 
         -- Transport type fields
-        if textInputField_RoadPassenger then textInputField_RoadPassenger:setText(
-            State.getTransportType('roadPassenger') or '', false) end
-        if textInputField_TramPassenger then textInputField_TramPassenger:setText(
-            State.getTransportType('tramPassenger') or '', false) end
-        if textInputField_TrainPassenger then textInputField_TrainPassenger:setText(
-            State.getTransportType('trainPassenger') or '', false) end
-        if textInputField_WaterPassenger then textInputField_WaterPassenger:setText(
-            State.getTransportType('waterPassenger') or '', false) end
-        if textInputField_AirPassenger then textInputField_AirPassenger:setText(
-            State.getTransportType('airPassenger') or '', false) end
-        if textInputField_RoadCargo then textInputField_RoadCargo:setText(State.getTransportType('roadCargo') or '',
-                false) end
-        if textInputField_TrainCargo then textInputField_TrainCargo:setText(State.getTransportType('trainCargo') or '',
-                false) end
-        if textInputField_WaterCargo then textInputField_WaterCargo:setText(State.getTransportType('waterCargo') or '',
-                false) end
+        if textInputField_RoadPassenger then
+            textInputField_RoadPassenger:setText(
+                State.getTransportType('roadPassenger') or '', false)
+        end
+        if textInputField_TramPassenger then
+            textInputField_TramPassenger:setText(
+                State.getTransportType('tramPassenger') or '', false)
+        end
+        if textInputField_TrainPassenger then
+            textInputField_TrainPassenger:setText(
+                State.getTransportType('trainPassenger') or '', false)
+        end
+        if textInputField_WaterPassenger then
+            textInputField_WaterPassenger:setText(
+                State.getTransportType('waterPassenger') or '', false)
+        end
+        if textInputField_AirPassenger then
+            textInputField_AirPassenger:setText(
+                State.getTransportType('airPassenger') or '', false)
+        end
+        if textInputField_RoadCargo then
+            textInputField_RoadCargo:setText(State.getTransportType('roadCargo') or '',
+                false)
+        end
+        if textInputField_TrainCargo then
+            textInputField_TrainCargo:setText(State.getTransportType('trainCargo') or '',
+                false)
+        end
+        if textInputField_WaterCargo then
+            textInputField_WaterCargo:setText(State.getTransportType('waterCargo') or '',
+                false)
+        end
         if textInputField_AirCargo then textInputField_AirCargo:setText(State.getTransportType('airCargo') or '', false) end
         if textInputField_Unknown then textInputField_Unknown:setText(State.getTransportType('unknown') or '', false) end
 
         -- Line type fields
-        if textInputField_LocalLine then textInputField_LocalLine:setText(State.getLineType('localLineAddon') or '',
-                false) end
-        if textInputField_IntercityLine then textInputField_IntercityLine:setText(
-            State.getLineType('intercityLineAddon') or '', false) end
-        if textInputField_RegionalLine then textInputField_RegionalLine:setText(
-            State.getLineType('regionalLineAddon') or '', false) end
+        if textInputField_LocalLine then
+            textInputField_LocalLine:setText(State.getLineType('localLineAddon') or '',
+                false)
+        end
+        if textInputField_IntercityLine then
+            textInputField_IntercityLine:setText(
+                State.getLineType('intercityLineAddon') or '', false)
+        end
+        if textInputField_RegionalLine then
+            textInputField_RegionalLine:setText(
+                State.getLineType('regionalLineAddon') or '', false)
+        end
 
         -- Cargo and town settings
-        if textInputField_CargoTypeSeparator then textInputField_CargoTypeSeparator:setText(
-            State.getCargoTypeSeparator(), false) end
+        if textInputField_CargoTypeSeparator then
+            textInputField_CargoTypeSeparator:setText(
+                State.getCargoTypeSeparator(), false)
+        end
         if combobox_CargoTypeShowType then combobox_CargoTypeShowType:setSelected(State.getCargoTypeShowType(), false) end
         if combobox_TownNameShowType then combobox_TownNameShowType:setSelected(State.getTownNameShowType(), false) end
-        if textInputField_TownNameSeparator then textInputField_TownNameSeparator:setText(State.getTownNameSeparator(),
-                false) end
+        if textInputField_TownNameSeparator then
+            textInputField_TownNameSeparator:setText(State.getTownNameSeparator(),
+                false)
+        end
 
         -- Debug log level
         if combobox_LogLevel then combobox_LogLevel:setSelected(log.getLevel() - 1, false) end
@@ -583,6 +642,8 @@ function GUIHelper.handleGuiEvents(filename, id, name, param)
         State.resetSettings()
         log.debug("Settings reset to default.")
     end
+    -- Ensure the preview reflects any state changes that arrived through events
+    updatePreview()
 end
 
 return GUIHelper
