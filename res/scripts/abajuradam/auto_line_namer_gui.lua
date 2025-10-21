@@ -376,32 +376,47 @@ function GUIHelper.gui_initSettingsWindow()
         -- General
         if checkBox_enableLineManager then checkBox_enableLineManager:setSelected(State.getEnabled(), false) end
         if textInputField_tagPrefix then textInputField_tagPrefix:setText(State.getTagPrefix(), false) end
-        if textInputField_activeConvention then textInputField_activeConvention:setText(State.getActiveConvention(), false) end
+        if textInputField_activeConvention then textInputField_activeConvention:setText(State.getActiveConvention(),
+                false) end
         if checkBox_autoUpdate then checkBox_autoUpdate:setSelected(State.getAutoUpdateEnabled(), false) end
-        if textInputField_autoUpdateInterval then textInputField_autoUpdateInterval:setText(tostring(State.getAutoUpdateInterval()), false) end
+        if textInputField_autoUpdateInterval then textInputField_autoUpdateInterval:setText(
+            tostring(State.getAutoUpdateInterval()), false) end
 
         -- Transport type fields
-        if textInputField_RoadPassenger then textInputField_RoadPassenger:setText(State.getTransportType('roadPassenger') or '', false) end
-        if textInputField_TramPassenger then textInputField_TramPassenger:setText(State.getTransportType('tramPassenger') or '', false) end
-        if textInputField_TrainPassenger then textInputField_TrainPassenger:setText(State.getTransportType('trainPassenger') or '', false) end
-        if textInputField_WaterPassenger then textInputField_WaterPassenger:setText(State.getTransportType('waterPassenger') or '', false) end
-        if textInputField_AirPassenger then textInputField_AirPassenger:setText(State.getTransportType('airPassenger') or '', false) end
-        if textInputField_RoadCargo then textInputField_RoadCargo:setText(State.getTransportType('roadCargo') or '', false) end
-        if textInputField_TrainCargo then textInputField_TrainCargo:setText(State.getTransportType('trainCargo') or '', false) end
-        if textInputField_WaterCargo then textInputField_WaterCargo:setText(State.getTransportType('waterCargo') or '', false) end
+        if textInputField_RoadPassenger then textInputField_RoadPassenger:setText(
+            State.getTransportType('roadPassenger') or '', false) end
+        if textInputField_TramPassenger then textInputField_TramPassenger:setText(
+            State.getTransportType('tramPassenger') or '', false) end
+        if textInputField_TrainPassenger then textInputField_TrainPassenger:setText(
+            State.getTransportType('trainPassenger') or '', false) end
+        if textInputField_WaterPassenger then textInputField_WaterPassenger:setText(
+            State.getTransportType('waterPassenger') or '', false) end
+        if textInputField_AirPassenger then textInputField_AirPassenger:setText(
+            State.getTransportType('airPassenger') or '', false) end
+        if textInputField_RoadCargo then textInputField_RoadCargo:setText(State.getTransportType('roadCargo') or '',
+                false) end
+        if textInputField_TrainCargo then textInputField_TrainCargo:setText(State.getTransportType('trainCargo') or '',
+                false) end
+        if textInputField_WaterCargo then textInputField_WaterCargo:setText(State.getTransportType('waterCargo') or '',
+                false) end
         if textInputField_AirCargo then textInputField_AirCargo:setText(State.getTransportType('airCargo') or '', false) end
         if textInputField_Unknown then textInputField_Unknown:setText(State.getTransportType('unknown') or '', false) end
 
         -- Line type fields
-        if textInputField_LocalLine then textInputField_LocalLine:setText(State.getLineType('localLineAddon') or '', false) end
-        if textInputField_IntercityLine then textInputField_IntercityLine:setText(State.getLineType('intercityLineAddon') or '', false) end
-        if textInputField_RegionalLine then textInputField_RegionalLine:setText(State.getLineType('regionalLineAddon') or '', false) end
+        if textInputField_LocalLine then textInputField_LocalLine:setText(State.getLineType('localLineAddon') or '',
+                false) end
+        if textInputField_IntercityLine then textInputField_IntercityLine:setText(
+            State.getLineType('intercityLineAddon') or '', false) end
+        if textInputField_RegionalLine then textInputField_RegionalLine:setText(
+            State.getLineType('regionalLineAddon') or '', false) end
 
         -- Cargo and town settings
-        if textInputField_CargoTypeSeparator then textInputField_CargoTypeSeparator:setText(State.getCargoTypeSeparator(), false) end
+        if textInputField_CargoTypeSeparator then textInputField_CargoTypeSeparator:setText(
+            State.getCargoTypeSeparator(), false) end
         if combobox_CargoTypeShowType then combobox_CargoTypeShowType:setSelected(State.getCargoTypeShowType(), false) end
         if combobox_TownNameShowType then combobox_TownNameShowType:setSelected(State.getTownNameShowType(), false) end
-        if textInputField_TownNameSeparator then textInputField_TownNameSeparator:setText(State.getTownNameSeparator(), false) end
+        if textInputField_TownNameSeparator then textInputField_TownNameSeparator:setText(State.getTownNameSeparator(),
+                false) end
 
         -- Debug log level
         if combobox_LogLevel then combobox_LogLevel:setSelected(log.getLevel() - 1, false) end
