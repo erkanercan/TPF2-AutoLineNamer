@@ -80,6 +80,14 @@ function data()
                                 State.setCargoType(subKey, subValue)
                             elseif key == "townName" then
                                 State.setTownName(subKey, subValue)
+                            elseif key == "autoUpdate" then
+                                -- autoUpdate is a small table with 'enabled' and 'interval'
+                                if subKey == "enabled" then
+                                    State.setAutoUpdateEnabled(subValue)
+                                elseif subKey == "interval" then
+                                    -- ensure numeric
+                                    State.setAutoUpdateInterval(tonumber(subValue) or subValue)
+                                end
                             end
                         end
                     else
