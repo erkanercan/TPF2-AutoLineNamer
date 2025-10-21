@@ -74,80 +74,112 @@ end
 -- General Settings Getters
 function State.getSettings()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings
+    if instance and instance.autoLineNamerSettings then
+        return instance.autoLineNamerSettings
+    end
+    return nil
 end
 
 function State.getAutoUpdateEnabled()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.autoUpdate.enabled
+    local settings = instance and instance.autoLineNamerSettings
+    if settings and settings.autoUpdate then
+        return settings.autoUpdate.enabled
+    end
+    return false
 end
 
 function State.getAutoUpdateInterval()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.autoUpdate.interval
+    local settings = instance and instance.autoLineNamerSettings
+    if settings and settings.autoUpdate then
+        return settings.autoUpdate.interval
+    end
+    return 1
 end
 
 function State.getEnabled()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.enabled
+    local settings = instance and instance.autoLineNamerSettings
+    if settings and settings.enabled ~= nil then
+        return settings.enabled
+    end
+    return true
 end
 
 function State.getActiveConvention()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.activeConvention
+    local settings = instance and instance.autoLineNamerSettings
+    if settings and settings.activeConvention then
+        return settings.activeConvention
+    end
+    return "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}"
 end
 
 function State.getTagPrefix()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.tagPrefix
+    local settings = instance and instance.autoLineNamerSettings
+    if settings and settings.tagPrefix then
+        return settings.tagPrefix
+    end
+    return "Cst"
 end
 
 -- Transport Type Getters
 function State.getTransportTypeSettings()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.transportType
+    local settings = instance and instance.autoLineNamerSettings
+    return (settings and settings.transportType) or {}
 end
 
 function State.getTransportType(key)
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.transportType[key]
+    local tt = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.transportType) or {}
+    return tt[key]
 end
 
 -- Line Type Getters
 function State.getLineTypeSettings()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.lineType
+    local settings = instance and instance.autoLineNamerSettings
+    return (settings and settings.lineType) or {}
 end
 
 function State.getLineType(key)
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.lineType[key]
+    local lt = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.lineType) or {}
+    return lt[key]
 end
 
 -- Cargo Type Getters
 function State.getCargoTypeSettings()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.cargoType
+    local settings = instance and instance.autoLineNamerSettings
+    return (settings and settings.cargoType) or {}
 end
 
 function State.getCargoTypeSeparator()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.cargoType.separator
+    local ct = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.cargoType) or {}
+    return ct.separator or ","
 end
 
 function State.getCargoTypeShowType()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.cargoType.showType
+    local ct = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.cargoType) or {}
+    return ct.showType or 0
 end
 
 function State.getTownNameShowType()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.townName.showType
+    local tn = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.townName) or {}
+    return tn.showType or 1
 end
 
 function State.getTownNameSeparator()
     local instance = State.instance or State.init()
-    return instance.autoLineNamerSettings.townName.separator
+    local tn = (instance and instance.autoLineNamerSettings and instance.autoLineNamerSettings.townName) or {}
+    return tn.separator or "-"
 end
 
 -- General Settings Setters
@@ -157,6 +189,9 @@ function State.setAutoUpdateEnabled(enabled)
         return
     end
     local instance = State.instance or State.init() -- Get single instance
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.autoUpdate = instance.autoLineNamerSettings.autoUpdate or {}
     instance.autoLineNamerSettings.autoUpdate.enabled = enabled
 end
 
@@ -166,6 +201,9 @@ function State.setAutoUpdateInterval(interval)
         return
     end
     local instance = State.instance or State.init() -- Get single instance
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.autoUpdate = instance.autoLineNamerSettings.autoUpdate or {}
     instance.autoLineNamerSettings.autoUpdate.interval = interval
 end
 
@@ -175,6 +213,8 @@ function State.setEnabled(enabled)
         return
     end
     local instance = State.instance or State.init() -- Get single instance
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
     instance.autoLineNamerSettings.enabled = enabled
 end
 
@@ -184,6 +224,8 @@ function State.setActiveConvention(convention)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
     instance.autoLineNamerSettings.activeConvention = convention
 end
 
@@ -193,24 +235,35 @@ function State.setTagPrefix(prefix)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
     instance.autoLineNamerSettings.tagPrefix = prefix
 end
 
 -- Transport Type Setters
 function State.setTransportType(key, value)
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.transportType = instance.autoLineNamerSettings.transportType or {}
     instance.autoLineNamerSettings.transportType[key] = value
 end
 
 -- Line Type Setters
 function State.setLineType(key, value)
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.lineType = instance.autoLineNamerSettings.lineType or {}
     instance.autoLineNamerSettings.lineType[key] = value
 end
 
 -- Cargo Type Setters
 function State.setCargoType(key, value)
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.cargoType = instance.autoLineNamerSettings.cargoType or {}
     instance.autoLineNamerSettings.cargoType[key] = value
 end
 
@@ -220,6 +273,9 @@ function State.setCargoTypeSeparator(separator)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.cargoType = instance.autoLineNamerSettings.cargoType or {}
     instance.autoLineNamerSettings.cargoType.separator = separator
 end
 
@@ -229,11 +285,17 @@ function State.setCargoTypeShowType(showType)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.cargoType = instance.autoLineNamerSettings.cargoType or {}
     instance.autoLineNamerSettings.cargoType.showType = showType
 end
 
 function State.setTownName(key, value)
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.townName = instance.autoLineNamerSettings.townName or {}
     instance.autoLineNamerSettings.townName[key] = value
 end
 
@@ -243,6 +305,9 @@ function State.setTownNameShowType(showType)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.townName = instance.autoLineNamerSettings.townName or {}
     instance.autoLineNamerSettings.townName.showType = showType
 end
 
@@ -252,15 +317,18 @@ function State.setTownNameSeparator(separator)
         return
     end
     local instance = State.instance or State.init()
+    if not instance then return end
+    instance.autoLineNamerSettings = instance.autoLineNamerSettings or {}
+    instance.autoLineNamerSettings.townName = instance.autoLineNamerSettings.townName or {}
     instance.autoLineNamerSettings.townName.separator = separator
 end
 
 -- Reset function
 function State.resetSettings()
-    State.autoLineNamerSettings = {
+    local instance = State.instance or State.init()
+    instance.autoLineNamerSettings = {
         activeConvention = "{transportType} {cargoTypes}-{townNames}-{lineType}-{lineNumber}",
         tagPrefix = "Cst",
-        prefix = "^",
         enabled = true,
         autoUpdate = {
             enabled = true,
@@ -300,7 +368,10 @@ function State.resetSettings()
             separator = "-",
         },
     }
-    return State.autoLineNamerSettings
+    if instance and instance.autoLineNamerSettings then
+        return instance.autoLineNamerSettings
+    end
+    return nil
 end
 
 return State

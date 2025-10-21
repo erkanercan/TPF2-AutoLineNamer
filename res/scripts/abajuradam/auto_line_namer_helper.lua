@@ -10,8 +10,13 @@ end
 
 -- Check if a line name can be updated (default names are considered updatable)
 function ALNHelper.isUpdatableName(name)
+    if type(name) ~= "string" then
+        return true
+    end
     local lowerName = string.lower(name)
-    local noUpdatePrefix = State.getTagPrefix()
+    local noUpdatePrefix = State.getTagPrefix() or ""
+    -- escape pattern magic characters in the prefix before using in a pattern
+    local escapedPrefix = tostring(noUpdatePrefix):gsub("(%W)", "%%%1")
 
     return name == ""
         or name:match("^%s*$")
@@ -20,7 +25,7 @@ function ALNHelper.isUpdatableName(name)
         or name:match("^Line %d+$")
         or lowerName:match("^unk")
         -- or name does not start with the prefix
-        or not name:match("^" .. noUpdatePrefix)
+        or not name:match("^" .. escapedPrefix)
 end
 
 --- Retrieves all towns from a line.
@@ -34,8 +39,10 @@ local function getAllTownInfosFromLine(lineComp)
         if stationGroup and stationGroup.stations and stationGroup.stations[1] then
             local townId = api.engine.system.stationSystem.getTown(stationGroup.stations[1])
             if townId and not allTowns[townId] then
-                local townName = api.engine.getComponent(townId, api.type.ComponentType.NAME).name
-                table.insert(towns, townName)
+                local townComp = api.engine.getComponent(townId, api.type.ComponentType.NAME)
+                if townComp and type(townComp.name) == "string" then
+                    table.insert(towns, townComp.name)
+                end
                 allTowns[townId] = true
             end
         end
@@ -57,15 +64,21 @@ local function getAllVehiclesInfosFromLine(lineId)
                 cargoNames = {},
                 cargoType = ""
             }
-            for cargoTypeId, capacity in ipairs(vehicleComp.config.capacities) do
-                if capacity > 0 then
-                    local cargoType = api.res.cargoTypeRep.get(cargoTypeId - 1)
-                    if (cargoType) then
-                        table.insert(vehicle.cargoNames, cargoType.name)
-                        if cargoType.name ~= "Passengers" then
-                            vehicle.cargoType = "CARGO"
-                        else
-                            vehicle.cargoType = "PASSENGER"
+            if vehicleComp.config and vehicleComp.config.capacities then
+                for cargoTypeId, capacity in ipairs(vehicleComp.config.capacities) do
+                    if capacity and capacity > 0 then
+                        -- try the most likely repository index first, fallback if nil
+                        local cargoType = api.res.cargoTypeRep.get(cargoTypeId - 1)
+                        if not cargoType then
+                            cargoType = api.res.cargoTypeRep.get(cargoTypeId)
+                        end
+                        if cargoType and cargoType.name then
+                            table.insert(vehicle.cargoNames, cargoType.name)
+                            if cargoType.name ~= "Passengers" then
+                                vehicle.cargoType = "CARGO"
+                            else
+                                vehicle.cargoType = "PASSENGER"
+                            end
                         end
                     end
                 end
@@ -88,7 +101,11 @@ local function getTownNameInitials(townName)
 end
 
 function ALNHelper.getLineName(lineId)
-    return api.engine.getComponent(lineId, api.type.ComponentType.NAME).name
+    local nameComp = api.engine.getComponent(lineId, api.type.ComponentType.NAME)
+    if not nameComp or type(nameComp.name) ~= "string" then
+        return ""
+    end
+    return nameComp.name
 end
 
 --- Retrieves the data of a line.
