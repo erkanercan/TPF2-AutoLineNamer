@@ -13,7 +13,7 @@ local function makePreviewFromState(opts)
     opts = opts or {}
     local convention = opts.convention or State.getActiveConvention() or ""
     local transportType = opts.transportType or State.getTransportType('roadPassenger') or
-    State.getTransportType('unknown') or "TP"
+        State.getTransportType('unknown') or "TP"
     local townSep = opts.townSep or State.getTownNameSeparator() or "-"
     local townShow = (opts.townShow ~= nil) and opts.townShow or State.getTownNameShowType()
     local townNames = "Springfield" .. townSep .. "Shelbyville"
@@ -73,7 +73,7 @@ function GUIHelper.gui_initSettingsWindow()
         if gameInfoLayout then
             gameInfoLayout = gameInfoLayout:getLayout()
             if gameInfoLayout then
-                local button = api.gui.comp.Button.new(api.gui.comp.TextView.new(_("gui_settings_button_label")), true)
+                local button = api.gui.comp.Button.new(api.gui.comp.TextView.new("[ALN]"), true)
                 button:onClick(gui_LMButtonClick)
                 button:setTooltip(_("gui_settings_tooltip"))
                 gameInfoLayout:addItem(api.gui.comp.Component.new("VerticalLine"))
