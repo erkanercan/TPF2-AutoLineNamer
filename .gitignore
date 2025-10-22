@@ -1,0 +1,11 @@
+# If you deploy locally, don't commit the target folder. Add the
+# absolute path to your global ~/.gitignore or remove it locally.
+# Example (do NOT commit with your username):
+# /Users/<your-username>/Library/Application Support/Steam/userdata/*/1066780/local/mods/
+#
+# Common ignores
+.DS_Store
+.vs/
+.vscode/
+node_modules/
+*.swp

@@ -1,9 +1,9 @@
+---@diagnostic disable-next-line: lowercase-global
 function data()
     return {
         info = {
-            name = "Auto Line Namer 0.1.4",
-            description =
-            "Automatically names new lines based on customizable naming conventions. Allows tagging lines to prevent auto-renaming.",
+            name = "Auto Line Namer 0.2.0",
+            description = _("mod_description"),
             authors = {
                 {
                     name = "erkanercan",
@@ -11,6 +11,8 @@ function data()
                 },
             },
             tags = { "Script Mod", "Misc" },
+            severityAdd = "NONE",
+            severityRemove = "NONE",
         },
     }
 end

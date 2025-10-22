@@ -6,7 +6,7 @@ local INFO = 3
 local WARN = 4
 local ERROR = 5
 
-local DEFAULT = ERROR
+local DEFAULT = WARN
 
 local levelNames = {
     [TRACE] = 'TRACE',
@@ -34,27 +34,14 @@ function log.setLevel(level)
     log.info("Logging level set to: " .. levelNames[currentLogLevel])
 end
 
----@param param boolean (optional) whether extended line info should used, default is false
----set whether extended line info should be used
-function log.setShowExtendedLineInfo(param)
-    if (param ~= nil) then
-        showExtendedLineInfo = param
-    else
-        showExtendedLineInfo = false
-    end
-    log.info("ShowExtendedLineInfo set to: " .. tostring(showExtendedLineInfo))
+function log.getLevel()
+    return currentLogLevel
 end
 
 ---@return boolean : whether current logging level is 'DEBUG' or greater
 ---used to determine whether debug messages should be displayed in the in-game console
 function log.isDebugging()
     return currentLogLevel <= DEBUG
-end
-
----@return boolean : whether the option to show extended line info is selected
----used to determine whether extended line info messages should be displayed in the in-game console
-function log.isShowExtendedLineInfo()
-    return currentLogLevel <= INFO and showExtendedLineInfo
 end
 
 ---@param level number message level
